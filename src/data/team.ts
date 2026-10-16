@@ -27,13 +27,6 @@ export const TEAM: Member[] = [
     thumb: wix('b08a92_e0b91d78637244ef8ad543b47224477c~mv2.jpeg/v1/fill/w_480,h_480,al_c,q_80,usm_0.66_1.00_0.01/Marissa.jpeg'),
   },
   {
-    name: 'Selena Butcher',
-    role: 'Board member',
-    href: 'se/',
-    photo: wix('f45d39_72d0328eadc24cb7bbab3ae79294a8ce~mv2.jpg/v1/crop/x_0,y_0,w_967,h_1165/fill/w_480,h_578,al_c,q_80,usm_0.66_1.00_0.01/selena.jpg'),
-    thumb: wix('f45d39_72d0328eadc24cb7bbab3ae79294a8ce~mv2.jpg/v1/crop/x_0,y_0,w_967,h_967/fill/w_480,h_480,al_c,q_80,usm_0.66_1.00_0.01/selena.jpg'),
-  },
-  {
     name: 'Dielle De Noon',
     role: 'Board member and Website Manager',
     href: 'dielle/',
