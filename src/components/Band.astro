@@ -1,0 +1,13 @@
+---
+/** Full-width coloured strip behind the canvas (y in page coordinates). Use in the "bands" slot. */
+import { HEADER_H } from '../lib/layout';
+
+interface Props {
+  y: number;
+  h: number;
+  color: string;
+}
+
+const { y, h, color } = Astro.props;
+---
+<div class="full" style={`top:${y - HEADER_H}px;height:${h}px;background:${color}`} aria-hidden="true"></div>

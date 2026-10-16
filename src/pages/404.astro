@@ -1,0 +1,11 @@
+---
+import Base from '../layouts/Base.astro';
+import Text from '../components/Text.astro';
+import { url } from '../lib/layout';
+---
+<Base title="Page not found | ws4s" height={400} bg="#F0FAFF">
+  <Text x={200} y={420} w={864} as="h1" font="os" size={40} weight={700} align="center" class="m-big">Page not found</Text>
+  <Text x={200} y={500} w={864} as="p" size={18} color="#515E65" align="center">
+    Sorry, we couldn’t find that page. <a href={url()} style="text-decoration:underline;color:#00995B">Go to the home page</a>.
+  </Text>
+</Base>

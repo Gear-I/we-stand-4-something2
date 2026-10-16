@@ -1,0 +1,60 @@
+---
+import { NAV } from '../data/site';
+import { pos, url, wix } from '../lib/layout';
+
+interface Props {
+  /** Path of the current page (e.g. "about/"), used to highlight the menu. */
+  current: string;
+}
+
+const { current } = Astro.props;
+const at = (x: number, y: number, w?: number, h?: number) => pos(x, y, w, h, 0);
+const logo = wix('996292_c27297a55ebd4707ba1e7e31cc39572e~mv2.png/v1/fill/w_236,h_154,al_c,q_85,usm_0.66_1.00_0.01/logo.png');
+const paypal = wix('996292_f4100cd3c3ee4b45940f760277026f63~mv2.jpg/v1/fill/w_228,h_78,al_c,q_80,usm_0.66_1.00_0.01/paypal.jpg');
+---
+<header class="band site-header">
+  <div class="canvas">
+    <a class="a" href={url()} style={at(178, 8, 118, 77)}>
+      <img src={logo} alt="We Stand 4 Something logo" width="118" height="77" />
+    </a>
+    <a class="a brand-title" href={url()} style={at(301, 81)}>We <b>Stand</b> 4 Something</a>
+    <a class="a brand-tag" href={url()} style={at(301, 119)}>"Enhancing Independence for People with Disabilities."</a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav">&#9776; Menu</button>
+    <nav class="a" id="site-nav" aria-label="Main" style={at(729, 113, undefined, 40)}>
+      <ul class="nav">
+        {NAV.map((item) => (
+          <li>
+            {item.href === null ? (
+              <button type="button" aria-haspopup="true">{item.label}</button>
+            ) : (
+              <a href={url(item.href)} aria-current={item.href === current ? 'page' : undefined}>{item.label}</a>
+            )}
+            {item.children && (
+              <ul class="sub">
+                {item.children.map((c) => (
+                  <li><a href={url(c.href)} aria-current={c.href === current ? 'page' : undefined}>{c.label}</a></li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))}
+      </ul>
+    </nav>
+    <div class="a dotted" style={at(190, 223, 462)}></div>
+    <a class="a pp" href={url('blank/')} style={at(897, 247, 114, 39)}>
+      <img src={paypal} alt="PayPal" width="114" height="39" />
+    </a>
+    <a class="a pp" href={url('blank/')} style={at(1021, 247, 92, 26)}>
+      <img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" alt="Donate with PayPal" width="92" height="26" />
+    </a>
+  </div>
+</header>
+
+<script>
+  const header = document.querySelector<HTMLElement>('.site-header');
+  const toggle = header?.querySelector<HTMLButtonElement>('.menu-toggle');
+  toggle?.addEventListener('click', () => {
+    const open = header!.classList.toggle('open');
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+</script>

@@ -1,0 +1,29 @@
+---
+/**
+ * An element placed at original page coordinates on the 980px canvas.
+ * Renders as <a> when `href` is given, otherwise as `as` (default div).
+ */
+import type { HTMLTag } from 'astro/types';
+import { pos, HEADER_H } from '../lib/layout';
+
+interface Props {
+  x: number;
+  y: number;
+  w?: number;
+  h?: number;
+  as?: HTMLTag;
+  href?: string;
+  /** Open link in a new tab. */
+  ext?: boolean;
+  class?: string;
+  style?: string;
+  /** Page y where this canvas starts (header/footer use 0). */
+  originY?: number;
+  [attr: string]: unknown;
+}
+
+const { x, y, w, h, as = 'div', href, ext = false, class: cls = '', style = '', originY = HEADER_H, ...rest } = Astro.props;
+const Tag = href ? 'a' : as;
+const linkAttrs = href ? { href, ...(ext ? { target: '_blank', rel: 'noopener' } : {}) } : {};
+---
+<Tag class:list={['a', cls]} style={pos(x, y, w, h, originY) + style} {...linkAttrs} {...rest}><slot /></Tag>

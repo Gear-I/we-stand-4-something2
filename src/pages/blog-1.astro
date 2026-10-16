@@ -1,0 +1,37 @@
+---
+// Blog index — the URL /blog-1/ is kept from the original Wix site.
+import Base from '../layouts/Base.astro';
+import Abs from '../components/Abs.astro';
+import Icon from '../components/Icon.astro';
+import PostMeta from '../components/PostMeta.astro';
+import { POSTS } from '../data/site';
+import { contentHeight, pos, url, wix, HEADER_H, FONTS } from '../lib/layout';
+---
+<Base title="Blog | ws4s" height={contentHeight(1424)} bg="#000" current="blog-1/">
+  <div slot="bands" class="full deco blog-panel" style={`top:0;height:${1188 - HEADER_H}px`}></div>
+
+  <Abs x={162} y={385} href={url('blog-1/')} style={`font:400 14px/19.6px ${FONTS.enr};color:#00E689`}>All Posts</Abs>
+
+  {POSTS.map((post, i) => {
+    const href = url(`post/${post.slug}/`);
+    return (
+      <article class="a post-card" style={pos(162, 454 + i * 373, 940, 341)}>
+        <a href={href} class="post-media" tabindex="-1" aria-hidden="true">
+          {post.youtube ? (
+            <>
+              <img src={`https://img.youtube.com/vi/${post.youtube}/hqdefault.jpg`} alt="" width="454" height="341" />
+              <Icon name="play" class="play" />
+            </>
+          ) : (
+            <img src={wix(`${post.image}/v1/fill/w_908,h_682,fp_0.50_0.50,lg_1,q_90/post.jpg`)} alt="" width="454" height="341" />
+          )}
+        </a>
+        <div class="post-body">
+          <PostMeta post={post} />
+          <h2 class="post-title"><a href={href}>{post.title}</a></h2>
+          {post.excerpt && <p class="post-excerpt">{post.excerpt}</p>}
+        </div>
+      </article>
+    );
+  })}
+</Base>

@@ -1,0 +1,48 @@
+---
+import Base from '../layouts/Base.astro';
+import Text from '../components/Text.astro';
+import Icon from '../components/Icon.astro';
+import Popup from '../components/Popup.astro';
+import { contentHeight, pos } from '../lib/layout';
+import type { IconName } from '../data/icons';
+
+const D = '#292F33';
+const blocks: { y: number; iconY: number; icon: IconName; title: string; titleY: number; desc?: { y: number; w: number; text: string } }[] = [
+  {
+    y: 448, iconY: 461, icon: 'chat', title: 'Advocacy', titleY: 443,
+    desc: { y: 519, w: 801, text: '“Teach a man to fish and he eats for a lifetime...”  We are firm believers in self advocacy.  Learning to speak up for yourself is the first step to true independence.  We also work with our state legislators and community partners to increase service offerings throughout Delaware.' },
+  },
+  {
+    y: 699, iconY: 711, icon: 'network', title: 'Resource Connection', titleY: 686,
+    desc: { y: 814, w: 828, text: 'Are you looking for access to financial, educational, life skills, and/or social development resources?  At We Stand 4 Something, we open the door to possibilities that allow those we serve to be more independent and live the life he/she deserves.  If you or someone you know is looking for access to services, we are here to assist you.' },
+  },
+  { y: 1047, iconY: 1060, icon: 'social', title: 'Social interaction groups', titleY: 1045 },
+];
+---
+<Base title="Services | ws4s" height={contentHeight(1849)} bg="#CADDE6" current="services/">
+  <Text x={400} y={358} w={465} font="din" size={20} weight={700} color="#00995B" align="center" italic>All services are free of charge for our clients...</Text>
+  <Text x={149} y={391} w={300} as="h1" font="os" size={25} color={D}>OUR SERVICES</Text>
+
+  {blocks.map((b) => (
+    <>
+      <div class="a deco" style={pos(159, b.y, 82, 82)}>
+        <Icon name="square" style="width:82px;height:82px;fill:#00995B" />
+        <Icon name={b.icon} style={`position:absolute;left:13px;top:${b.iconY - b.y}px;width:55px;height:55px;fill:#004D2E`} />
+      </div>
+      <Text x={250} y={b.titleY} w={400} as="h2" font="amatic" size={40} color={D}>{b.title}</Text>
+      {b.desc && <Text x={253} y={b.desc.y} w={b.desc.w} font="din" size={26} weight={300} color={D} class="m-text">{b.desc.text}</Text>}
+    </>
+  ))}
+
+  <Text x={292} y={1181} w={781} font="din" size={26} weight={300} color={D} class="m-text">
+    Brain Injury Survivor Group:  Our brain injury social interaction group meets virtually on the 1st and 3rd Tuesday of each month.  If you are interested in joining, please <button type="button" class="inline-link" data-open="brain-injury">click here</button> to register
+  </Text>
+  <Text x={292} y={1294} w={781} font="din" size={26} weight={300} color={D} class="m-text">
+    Parent/Caregiver Social Interaction Group:  If you would like to join our parent/caregiver group, please <button type="button" class="inline-link" data-open="caregiver">click here</button> to register
+  </Text>
+
+  <Fragment slot="after">
+    <Popup id="brain-injury" title="Join our Brain Injury Group" />
+    <Popup id="caregiver" title="Parent/Caregiver Group" />
+  </Fragment>
+</Base>

@@ -1,0 +1,19 @@
+---
+import { CONTACT } from '../data/site';
+import { pos } from '../lib/layout';
+
+const at = (x: number, y: number, w?: number) => pos(x, y, w, undefined, 0);
+---
+<footer class="band site-footer">
+  <div class="canvas">
+    <p class="a ft-logo" style={at(149, 39)}>WS<span>4</span>S</p>
+    <p class="a ft-txt" style={at(149, 152, 260)}>{CONTACT.tagline}</p>
+    <div class="a ft-txt" style={at(910, 20, 210)}>
+      {CONTACT.name}<br />
+      {CONTACT.address[0]}<br />{CONTACT.address[1]}<br />
+      {CONTACT.phoneDisplay}<br />
+      <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+    </div>
+    <p class="a ft-txt" style={at(562, 152, 230)}>{CONTACT.copyright}</p>
+  </div>
+</footer>

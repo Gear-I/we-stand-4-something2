@@ -1,0 +1,57 @@
+---
+/** Edge-to-edge photo carousel (Photo Gallery page). */
+import { HEADER_H, wix } from '../lib/layout';
+
+interface Props {
+  y: number;
+  label: string;
+  /** Wix media IDs (without ~mv2.jpg). */
+  photos: readonly string[];
+}
+
+const { y, label, photos } = Astro.props;
+---
+<div
+  class="a slider m-full"
+  tabindex="0"
+  aria-roledescription="carousel"
+  aria-label={label}
+  style={`left:calc(25px - (100vw - 980px) / 2);right:calc(32px - (100vw - 980px) / 2);top:${y - HEADER_H}px;height:376px`}
+>
+  <button type="button" class="slider-btn prev" style="left:0" aria-label="Previous photos">&#10094;</button>
+  <button type="button" class="slider-btn next" style="right:0" aria-label="Next photos">&#10095;</button>
+  <div class="slider-track">
+    {photos.map((id, i) => (
+      <figure>
+        <img
+          src={wix(`${id}~mv2.jpg/v1/fill/w_564,h_564,al_c,q_80,usm_0.66_1.00_0.01/${id}.jpg`)}
+          alt={`${label} ${i + 1}`}
+          width="376"
+          height="376"
+          loading="lazy"
+        />
+      </figure>
+    ))}
+  </div>
+</div>
+
+<script>
+  const slider = document.querySelector<HTMLElement>('.slider');
+  const track = slider?.querySelector<HTMLElement>('.slider-track');
+  if (slider && track) {
+    let index = 0;
+    const step = (): number => (track.querySelector('figure')?.getBoundingClientRect().width ?? 376) + 30;
+    const max = (): number => Math.max(0, track.children.length - Math.floor(slider.clientWidth / step()));
+    const go = (n: number): void => {
+      index = Math.min(Math.max(n, 0), max());
+      track.style.transform = `translateX(${-index * step()}px)`;
+    };
+    slider.querySelector('.prev')?.addEventListener('click', () => go(index - 1));
+    slider.querySelector('.next')?.addEventListener('click', () => go(index + 1));
+    slider.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') go(index - 1);
+      if (e.key === 'ArrowRight') go(index + 1);
+    });
+    window.addEventListener('resize', () => go(index));
+  }
+</script>

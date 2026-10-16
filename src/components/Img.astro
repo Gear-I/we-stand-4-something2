@@ -1,0 +1,29 @@
+---
+/** A positioned image, optionally wrapped in a link. */
+import { pos } from '../lib/layout';
+
+interface Props {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  src: string;
+  alt: string;
+  href?: string;
+  ext?: boolean;
+  radius?: string;
+  fit?: 'cover' | 'contain';
+  /** "deco" hides it on phones. */
+  class?: string;
+}
+
+const { x, y, w, h, src, alt, href, ext = false, radius, fit = 'cover', class: cls = '' } = Astro.props;
+const r = radius ? `border-radius:${radius};` : '';
+---
+{href ? (
+  <a class:list={['a', cls]} href={href} target={ext ? '_blank' : undefined} rel={ext ? 'noopener' : undefined} style={pos(x, y, w, h) + r}>
+    <img src={src} alt={alt} width={w} height={h} loading="lazy" style={`width:100%;height:100%;object-fit:${fit};${r}`} />
+  </a>
+) : (
+  <img class:list={['a', cls]} src={src} alt={alt} width={w} height={h} loading="lazy" style={pos(x, y, w, h) + `object-fit:${fit};` + r} />
+)}

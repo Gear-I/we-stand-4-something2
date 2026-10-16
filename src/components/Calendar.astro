@@ -1,0 +1,62 @@
+---
+/** Month calendar in the style of the original Events page widget. */
+import { pos } from '../lib/layout';
+
+interface Props {
+  x: number;
+  y: number;
+  w: number;
+}
+
+const { x, y, w } = Astro.props;
+---
+<section class="a cal m-full" id="cal" aria-label="Events calendar" style={pos(x, y, w)}>
+  <div class="cal-head">
+    <button type="button" class="cal-today"><i></i>TODAY</button>
+    <button type="button" class="prev" aria-label="Previous month">&#10094;</button>
+    <button type="button" class="next" aria-label="Next month">&#10095;</button>
+    <span class="cal-title" aria-live="polite"></span>
+  </div>
+  <div class="cal-grid"></div>
+</section>
+
+<script>
+  const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+
+  const cal = document.getElementById('cal');
+  if (cal) {
+    const shown = new Date();
+    shown.setDate(1);
+
+    const draw = (): void => {
+      const year = shown.getFullYear();
+      const month = shown.getMonth();
+      const today = new Date();
+      cal.querySelector('.cal-title')!.textContent = `${MONTHS[month]} ${year}`;
+      cal.querySelector('.cal-today i')!.textContent = String(today.getDate());
+
+      const start = new Date(year, month, 1 - new Date(year, month, 1).getDay());
+      let html = DAYS.map((d) => `<div class="cal-dow">${d}</div>`).join('');
+      for (let i = 0; i < 42; i++) {
+        const d = new Date(start);
+        d.setDate(start.getDate() + i);
+        const cls = ['cal-day'];
+        if (d.getMonth() !== month) cls.push('muted');
+        if (d.toDateString() === today.toDateString()) cls.push('today');
+        if (i >= 35) cls.push('last');
+        html += `<div class="${cls.join(' ')}"><span>${d.getDate()}</span></div>`;
+      }
+      cal.querySelector('.cal-grid')!.innerHTML = html;
+    };
+
+    cal.querySelector('.prev')!.addEventListener('click', () => { shown.setMonth(shown.getMonth() - 1); draw(); });
+    cal.querySelector('.next')!.addEventListener('click', () => { shown.setMonth(shown.getMonth() + 1); draw(); });
+    cal.querySelector('.cal-today')!.addEventListener('click', () => {
+      const now = new Date();
+      shown.setFullYear(now.getFullYear(), now.getMonth(), 1);
+      draw();
+    });
+    draw();
+  }
+</script>

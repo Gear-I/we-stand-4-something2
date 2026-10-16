@@ -1,0 +1,14 @@
+---
+import Icon from './Icon.astro';
+import type { Post } from '../data/site';
+
+interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+---
+<div class="post-byline">
+  <Icon name="avatar" style="width:32px;height:32px;flex:none" />
+  <div class="post-meta">{post.author}<br />{post.date} &middot; {post.readTime}</div>
+</div>

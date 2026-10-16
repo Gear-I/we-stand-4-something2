@@ -1,0 +1,30 @@
+---
+import Base from '../layouts/Base.astro';
+import Text from '../components/Text.astro';
+import Img from '../components/Img.astro';
+import Box from '../components/Box.astro';
+import { RESOURCES } from '../data/resources';
+import { contentHeight, url, wix } from '../lib/layout';
+
+const CENTER = 632; // centre line of the column
+---
+<Base title="Resources | ws4s" height={contentHeight(4152)} bg="#A4F7D5" current="resources/">
+  <Text x={424} y={349} w={420} as="h1" font="lulo" size={44} weight={800} color="#203931" class="m-big" style="text-transform:uppercase;letter-spacing:2px">Resources</Text>
+  <Box x={424} y={418} w={375} h={5} style="border-top:2px solid #01B1AF" />
+  <Text x={339} y={432} w={547} font="lb" size={15} align="center" class="m-text">
+    We Stand 4 Something non-profit will continually be updating the resources on this page to help those with access and functional needs to gain the appropriate services that you are entitled to.
+  </Text>
+
+  {RESOURCES.map((r) => (
+    <>
+      <Text x={CENTER - 304} y={r.titleY} w={608} as="h2" font="pop" size={18} weight={600} align="center" ls="0.18px" style="white-space:pre-line">{r.title}</Text>
+      <Img x={r.img.x} y={r.img.y} w={r.img.w} h={r.img.h} src={wix(r.image)} alt={r.title.replace('\n', ' ')} href={r.url} ext fit="contain" />
+      <Text x={CENTER - 60} y={r.viewY} w={120} href={r.url} ext class="view-link">VIEW</Text>
+    </>
+  ))}
+
+  <Box x={348} y={3743} w={568} h={173} style="background:#CADDE6" />
+  <Text x={406} y={3784} w={452} href={url('feedback/')} font="lb" size={20} color="#515E65" align="center">
+    If there are any other resources that you feel are important and do not see listed above, please click here to let us know on our feedback page!
+  </Text>
+</Base>

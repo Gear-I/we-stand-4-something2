@@ -1,0 +1,50 @@
+---
+/**
+ * A positioned form whose fields sit at their original page coordinates.
+ * Submitting opens the visitor's email app (see scripts/mailto-forms.ts).
+ */
+import { pos } from '../lib/layout';
+
+export interface Field {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  name: string;
+  placeholder: string;
+  type: 'text' | 'email' | 'tel' | 'textarea';
+  required?: boolean;
+}
+
+interface Props {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  subject: string;
+  fields: Field[];
+  /** Submit button position/size in page coordinates. */
+  button: { x: number; y: number; w: number; h: number; label: string; style: string };
+  fieldStyle: string;
+}
+
+const { x, y, w, h, subject, fields, button, fieldStyle } = Astro.props;
+const inner = (f: { x: number; y: number; w: number; h: number }) =>
+  `position:absolute;left:${f.x - x}px;top:${f.y - y}px;width:${f.w}px;height:${f.h}px;`;
+---
+<form class="a wform" data-subject={subject} style={pos(x, y, w, h)} action="mailto:info@westand4something.org" method="post" enctype="text/plain">
+  <slot />
+  {fields.map((f) =>
+    f.type === 'textarea' ? (
+      <textarea name={f.name} placeholder={f.placeholder} aria-label={f.placeholder} style={inner(f) + fieldStyle} required={f.required} />
+    ) : (
+      <input type={f.type} name={f.name} placeholder={f.placeholder} aria-label={f.placeholder} style={inner(f) + fieldStyle} required={f.required} />
+    )
+  )}
+  <button type="submit" style={inner(button) + button.style}>{button.label}</button>
+</form>
+
+<script>
+  import { initMailtoForms } from '../scripts/mailto-forms';
+  initMailtoForms();
+</script>

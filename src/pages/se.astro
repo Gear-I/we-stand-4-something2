@@ -1,0 +1,16 @@
+---
+// Selena Butcher's bio — the URL /se/ is kept from the original Wix site.
+import Base from '../layouts/Base.astro';
+import Text from '../components/Text.astro';
+import Img from '../components/Img.astro';
+import { contentHeight, url, wix } from '../lib/layout';
+---
+<Base title="Selena | ws4s" height={contentHeight(1201)} bg="#CADDE6">
+  <Text x={186} y={383} w={400} as="h1" font="os" size={25} lh="32.5px">Selena Butcher - Member</Text>
+  <Img x={214} y={419} w={190} h={230} src={wix('f45d39_72d0328eadc24cb7bbab3ae79294a8ce~mv2.jpg/v1/crop/x_0,y_0,w_967,h_1165/fill/w_380,h_460,al_c,q_80,usm_0.66_1.00_0.01/selena.jpg')} alt="Selena Butcher" />
+  <Text x={469} y={464} w={595} font="helv" size={18} lh="23.4px" ls="0.18px" class="m-text">
+    Selina Butcher, a woman with cerebral palsy. Born and raised in Wilmington Delaware. Growing up, had its Challenges… Being the “different one“, but her advocacy journey started from these experiences, she had  to grow her alligator skin at a young age… Asserting her needs and opinions, so that she would not be rolled over in the world that was not made for her. Relying on a wheelchair to get her from point B she has carved out a simple life that she enjoys. Selina is a graduate of Temple university, with a BA in criminal justice. She was told that she was not going to survive the demand of school and being in the city! She proved all of her guidance counselors Wrong! She loves to travel and make good friends! Not shy, but reserved. She is a firm believer that your voice is your first tool to becoming a great advocate… Use it or lose it! she stands firm in her belief that persons with disabilities have a right to live and enjoy the pleasures of life as everyone else, and no need to be shy or bashful or afraid… it is time for persons with disabilities to come out of the shadows. We all deserve to live life on our own terms! Selina is an advocate for persons with disabilities, because she is a person with a disability herself! “Nothing about us, without Us“ Life is a journey, there will be bumps ahead, lace up your shoes and get ready, the journey begins and advocating will never end!
+  </Text>
+  <Text x={299} y={918} w={100} href={url('dielle/')} class="pager">Back</Text>
+  <Text x={960} y={918} w={100} href={url('services/')} class="pager">Next</Text>
+</Base>
