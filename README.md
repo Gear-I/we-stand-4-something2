@@ -9,7 +9,7 @@ Requires Node.js 22.12 or newer.
 
 ```sh
 npm install
-npm run dev      # local preview at http://localhost:4321/we-stand-4-something/
+npm run dev      # local preview at http://localhost:4321/we-stand-4-something2/
 npm run build    # production build into dist/
 npm run check    # type-check .astro and .ts files
 ```
@@ -51,7 +51,7 @@ Pushing to `main` runs `.github/workflows/deploy.yml`, which builds the site and
 One-time setup: **Settings → Pages → Build and deployment → Source: GitHub Actions**.
 (GitHub Pages on a private repository requires a paid GitHub plan.)
 
-The site is served at `https://gear-i.github.io/we-stand-4-something/`.
+The site is served at `https://gear-i.github.io/we-stand-4-something2/`.
 
 ### Custom domain
 
