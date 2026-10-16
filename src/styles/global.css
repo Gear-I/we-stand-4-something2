@@ -193,7 +193,7 @@ a:hover { color: var(--teal-strong); text-decoration-thickness: 0.16em; }
 .hero h1 { max-width: 16ch; }
 .hero-lead { font-size: 1.25rem; color: var(--muted); max-width: 34rem; margin-bottom: 1.75rem; }
 .hero-art { position: relative; justify-self: center; width: min(100%, 26rem); }
-.hero-art .stroke { position: absolute; inset: 8% -12% 6% -10%; width: 122%; height: 86%; fill: var(--lime); }
+.hero-art .stroke { position: absolute; left: -14%; top: 22%; width: 128%; height: 92%; transform: rotate(-6deg); fill: var(--lime); }
 .hero-art img { position: relative; border-radius: 1rem; width: 100%; }
 
 /* ---------- "how we help" list ---------- */
