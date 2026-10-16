@@ -110,6 +110,12 @@ def RAW(y, markup):
     return El(y, markup)
 
 
+def order(el, key):
+    """Override reading order (used when the page stacks into one column on phones)."""
+    el.y = key
+    return el
+
+
 def LINK(x, y, w, text, href, cls="view-link", ext=False, style=""):
     tgt = ' target="_blank" rel="noopener"' if ext else ""
     return El(y, f'<a class="a {cls}" href="{esc(href)}"{tgt} style="{pos(x, y, w)}{style}">{esc(text)}</a>')
@@ -251,7 +257,7 @@ def build_home():
     big_logo = WIX + "996292_c27297a55ebd4707ba1e7e31cc39572e~mv2.png/v1/fill/w_960,h_960,al_c,q_90,usm_0.66_1.00_0.01/logo.png"
     emm = WIX + "f45d39_0f746333cff946bda5b82c822bd27a7e~mv2.jpeg/v1/fill/w_328,h_308,al_c,q_80,usm_0.66_1.00_0.01/Emmanuel%20Jenkins.jpeg"
     els = [
-        I(142, 520, 480, 480, big_logo, "We Stand 4 Something logo: a raised hand holding the globe", radius="7px"),
+        order(I(142, 520, 480, 480, big_logo, "We Stand 4 Something logo: a raised hand holding the globe", radius="7px"), 300),
         T(629, 364, 208, "Click to learn more!", "trend", 21, 400, W, lh="21px", style="text-transform:uppercase", cls="m-big"),
         STACKBTN(626, 458, 224, 71, "Friday Feast", "friday-feast/", "#006C6D", "#003637", "chevrons", 626, 465, 55, 685, 479),
         STACKBTN(629, 565, 224, 71, "Social", "services/", "#6DCFB6", "#37685B", "social", 653, 573, 55, 760, 586),
@@ -260,11 +266,11 @@ def build_home():
         STACKBTN(634, 1001, 221, 71, "Life Skills", "services/", "#123636", "#091B1B", "network", 649, 1009, 55, 724, 1022),
         STACKBTN(627, 1139, 219, 74, "Resources", "resources/", "#6DCFB6", "#37685B", "down", 656, 1154, 43, 705, 1159, 24, "33.6px"),
         BOX(869, 361, 13, 526, "border-left:6.67px solid #CADDE6"),
-        T(918, 374, 194, "Leave Your Mark", "os", 25, 400, "#CADDE6", "center", tag="h2", style="margin:0"),
-        I(914, 427, 164, 154, emm, "Emmanuel Jenkins", href="emmanuel/"),
-        T(876, 610, 240, "Emmanuel Jenkins is a dedicated advocate and the founder of We Stand 4 Something. With over 20 years of experience in public speaking and community leadership, he works tirelessly to support individuals with disabilities and their families.",
-          "enr", 18, 400, "#fff", "center", "23.4px", cls="m-text"),
-        RAW(873, f'<a class="a" href="emmanuel/" style="{pos(921, 873, 151, 33)}background:#282626;color:{W};font:300 18px/33px {FONTS["avenir"]};letter-spacing:.9px;text-align:center">Read More</a>'),
+        order(T(900, 374, 230, "Leave Your Mark", "os", 25, 400, "#CADDE6", "center", tag="h2", style="margin:0;white-space:nowrap"), 2000),
+        order(I(914, 427, 164, 154, emm, "Emmanuel Jenkins", href="emmanuel/"), 2001),
+        order(T(872, 610, 248, "Emmanuel Jenkins is a dedicated advocate and the founder of We Stand 4 Something. With over 20 years of experience in public speaking and community leadership, he works tirelessly to support individuals with disabilities and their families.",
+          "enr", 18, 400, "#fff", "center", "23.4px", cls="m-text"), 2002),
+        RAW(2003, f'<a class="a" href="emmanuel/" style="{pos(921, 873, 151, 33)}background:#282626;color:{W};font:300 18px/33px {FONTS["avenir"]};letter-spacing:.9px;text-align:center">Read More</a>'),
     ]
     icons = [("8d6893330740455c96d218258a458aa4.png", "https://www.instagram.com/westand4somthing/", "Instagram"),
              ("9c4b521dd2404cd5a05ed6115f3a0dc8.png", "https://twitter.com/4Westand", "Twitter"),

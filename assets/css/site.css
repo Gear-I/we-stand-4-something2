@@ -51,7 +51,7 @@ p { margin: 0; }
 .nav > li { position: relative; }
 .nav > li + li { border-left: 1px solid var(--c15); }
 .nav > li > a, .nav > li > button {
-  display: block; height: 40px; padding: 0 14px;
+  display: block; height: 40px; padding: 0 15px;
   font: 700 14px/40px 'Enriqueta', serif; color: var(--c19);
   background: none; border: 0; cursor: pointer; white-space: nowrap;
   transition: color .4s ease;
