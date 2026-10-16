@@ -1,0 +1,13 @@
+---
+import Base from '../layouts/Base.astro';
+import Text from '../components/Text.astro';
+import Box from '../components/Box.astro';
+import PhotoSlider from '../components/PhotoSlider.astro';
+import { GALLERY } from '../data/gallery';
+import { contentHeight } from '../lib/layout';
+---
+<Base title="Photo Gallery | ws4s" height={contentHeight(1090)} bg="#CADDE6" current="photo-gallery/">
+  <Text x={400} y={365} w={465} as="h1" font="trend" size={27} color="#292929" align="center" lh="27px" style="text-transform:uppercase">2018 fRIDAY fEAST</Text>
+  <PhotoSlider y={414} label="2018 Friday Feast photo" photos={GALLERY} />
+  <Box x={154} y={809} w={937} h={1} style="border-top:0.67px solid #00E689" />
+</Base>

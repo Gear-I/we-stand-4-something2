@@ -1,0 +1,61 @@
+---
+import Base from '../layouts/Base.astro';
+import Text from '../components/Text.astro';
+import Img from '../components/Img.astro';
+import Box from '../components/Box.astro';
+import Band from '../components/Band.astro';
+import { contentHeight, url, wix } from '../lib/layout';
+
+const H = '#292F33';
+const G = '#515E65';
+const rule = 'border-top:0.67px solid rgba(154,174,184,.8)';
+
+const members = [
+  { name: 'Emmanuel Jenkins', href: 'emmanuel/', nameY: 1515, img: [535, 1546, 180, 180], radius: '50%',
+    src: '0bae78_65688fe79512416aabb7ebcc737b1519~mv2_d_1440_1440_s_2.jpg/v1/fill/w_360,h_360,al_c,q_80,usm_0.66_1.00_0.01/emmanuel.jpg' },
+  { name: 'Marissa Castello', href: 'marissa/', nameY: 1756, img: [535, 1793, 200, 188], radius: '50%',
+    src: 'b08a92_e0b91d78637244ef8ad543b47224477c~mv2.jpeg/v1/fill/w_400,h_376,al_c,q_80,usm_0.66_1.00_0.01/Marissa.jpeg' },
+  { name: 'Selena Butcher', href: 'se/', nameY: 2018, img: [549, 2061, 163, 200],
+    src: 'f45d39_72d0328eadc24cb7bbab3ae79294a8ce~mv2.jpg/v1/crop/x_0,y_0,w_967,h_1165/fill/w_326,h_400,al_c,q_80,usm_0.66_1.00_0.01/selena.jpg' },
+  { name: 'Dielle De Noon', href: 'dielle/', nameY: 2282, img: [550, 2322, 163, 163],
+    src: 'f45d39_1f23f76352474dd3b8ddf23fa1303ab4~mv2.jpg/v1/crop/x_0,y_505,w_3024,h_3022/fill/w_326,h_326,al_c,q_80,usm_0.66_1.00_0.01/dielle.jpg' },
+] as const;
+---
+<Base title="About/Board Members | ws4s" height={contentHeight(3208)} bg="#CADDE6" current="about/">
+  <Fragment slot="bands">
+    <Band y={354} h={435} color="#F0FAFF" />
+    <Band y={2967} h={5} color="#CADDE6" />
+  </Fragment>
+
+  <Text x={400} y={408} w={463} as="h2" font="os" size={25} weight={700} color={H} align="center">MISSION STATEMENT</Text>
+  <Box x={168} y={442} w={920} h={1} style={rule} />
+  <Text x={254} y={468} w={790} size={20} color={G} class="m-text">
+    We Stand 4 Something, Inc. provides the bridge between traditional services and the full, engaged lives people want. We have first-hand experiences understanding people with disabilities because we are people with disabilities and their families.  We pledge to primarily employ people with disabilities to deliver our services. We empower people and their families to use advocacy to tailor their environments to supplement their strengths. We support people to live lives of quality, fully included within their communities.
+  </Text>
+
+  <Text x={400} y={664} w={463} as="h2" font="os" size={25} weight={700} color={H} align="center">VISION STATEMENT</Text>
+  <Box x={172} y={699} w={920} h={1} style={rule} />
+  <Text x={258} y={720} w={759} size={20} color={G} italic class="m-text">
+    To enhance the lives of people with disabilities by teaching them skills they can use to speak for themselves for their whole lives.
+  </Text>
+
+  <Text x={400} y={798} w={420} as="h2" font="os" size={25} weight={700} color={H} align="center" lh="27.5px">Values and Beliefs</Text>
+  <Text x={203} y={848} w={896} size={20} color={G} lh="26px" class="m-text">
+    We believe everyone is entitled to an individualized education that plays to their strengths. We provide education and advocacy services for families and assist them through the IEP process. We value the voices of people with disabilities and know that each person has a story to tell. We provide teaching self-advocacy skills and coaching in public speaking so people can find their own voice and share it with others. We believe all people should have a safe environment in which to live that is suited to their unique needs and to live where they desire. We provide assistance with locating housing, supporting people throughout the process, from finding a great location to move-in day and beyond. We believe all people should be able to access public services.
+  </Text>
+  <Text x={203} y={1106} w={889} size={20} color={G} lh="26px" class="m-text">
+    We provide assistance to navigate application and eligibility requirements for assistance programs. We believe all people need to get out and have fun! We provide opportunities for people to get together in their communities, connect with others, and have a good time! We value the safeguards provided to us by the ADA. We believe all people should be educated about the ADA. Our approved ADA trainers provide information to individuals and organizations using the Mid-Atlantic ADA Center and Cornell University’s training materials. We believe every person who wants to work must have the opportunity to work. We help people find employment while offering training to develop needed skills,  including resume writing, dressing for success, communicating at work, etc. that will help them to be great employees. We believe everyone needs a safe space and the opportunity to talk to others experiencing the same life circumstances.
+  </Text>
+  <Text x={203} y={1364} w={889} size={20} color={G} lh="26px" class="m-text" style="padding-top:2px">
+    We offer services to help families connect to one another so they can share experiences and learn from each other.
+  </Text>
+
+  <Text x={400} y={1462} w={463} as="h2" font="os" size={25} weight={700} color={H} align="center">Board Members' Biography</Text>
+  {members.map((m) => (
+    <>
+      <Text x={482} y={m.nameY} w={300} href={url(m.href)} class="navy-link">{m.name}</Text>
+      <Img x={m.img[0]} y={m.img[1]} w={m.img[2]} h={m.img[3]} src={wix(m.src)} alt={m.name} href={url(m.href)} radius={'radius' in m ? m.radius : undefined} />
+    </>
+  ))}
+  <Text x={981} y={2881} w={100} href={url('emmanuel/')} class="pager">Next</Text>
+</Base>

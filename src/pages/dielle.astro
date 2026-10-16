@@ -1,0 +1,15 @@
+---
+import Base from '../layouts/Base.astro';
+import Text from '../components/Text.astro';
+import Img from '../components/Img.astro';
+import { contentHeight, url, wix } from '../lib/layout';
+---
+<Base title="Dielle | ws4s" height={contentHeight(1060)} bg="#CADDE6">
+  <Text x={162} y={385} w={600} as="h1" font="os" size={25} lh="32.5px">Dielle De Noon- Member Website Manager</Text>
+  <Img x={182} y={435} w={214} h={214} src={wix('f45d39_2e77752fec1347b1b50ddb302f678ce0~mv2.jpeg/v1/fill/w_428,h_428,al_c,q_80,usm_0.66_1.00_0.01/dielle.jpeg')} alt="Dielle De Noon" />
+  <Text x={453} y={437} w={592} font="helv" size={18} lh="23.4px" ls="0.18px" class="m-text">
+    Hello! My name is Dielle De Noon; I am currently attending Western Governors University (WGU) for my 2nd bachelors degree in Cybersecurity and Information Assurance, I have a strong passion for working with computers and have been for many years. It is fascinating how technology has evolved and is continuing to evolve. I have a passion for helping others resolve computing technical issues, from hardware to security. I am always eager to learn new things related to technologies and cybersecurity. Furthermore, I have a passion for working as a team and offering and accepting various ideas and suggestions on various topics and tasks. I am also the Chair for Delaware Developmental Disabilities Council.
+  </Text>
+  <Text x={186} y={757} w={100} href={url('marissa/')} class="pager">Back</Text>
+  <Text x={953} y={757} w={100} href={url('se/')} class="pager">Next</Text>
+</Base>

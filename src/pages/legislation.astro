@@ -1,0 +1,31 @@
+---
+import Base from '../layouts/Base.astro';
+import Text from '../components/Text.astro';
+import Img from '../components/Img.astro';
+import Box from '../components/Box.astro';
+import { contentHeight, pos, wix } from '../lib/layout';
+
+const seal = wix('0bae78_b5a13387533c405987c97ce6f0c5c84f~mv2.png/v1/fill/w_300,h_298,al_c,q_85,usm_0.66_1.00_0.01/Seal_of_Delaware.png');
+const thumb = wix('0bae78_10a419dc9cd84e21b8a7c458a2f30f24~mv2.jpg/v1/fill/w_526,h_298,al_c,q_80,usm_0.66_1.00_0.01/bill-signing.jpg');
+const video = 'https://livestream.com/StateofDelaware/aug6/videos/194701430';
+const news = 'https://news.delaware.gov/2019/08/07/icymi-governor-carney-signs-legislation-protecting-health-care-for-delawareans/';
+---
+<Base title="Local Legislation | ws4s" height={contentHeight(1201)} bg="#B6CDE1" current="legislation/">
+  <Img x={206} y={362} w={150} h={149} src={seal} alt="Seal of the State of Delaware" class="deco" />
+  <Text x={470} y={393} w={360} as="h1" font="cinzel" size={28} weight={700} color="#6D706C" align="center" lh="28px" ls="3.36px">Legislative news</Text>
+  <svg class="a deco" style={pos(558, 445, 194, 50)} viewBox="0 0 194 50" aria-hidden="true" fill="none" stroke="#6D706C" stroke-width="1.6">
+    <path d="M8 25h62M124 25h62" />
+    <path d="M70 25c8-14 20-14 27 0 7 14 19 14 27 0" />
+    <path d="M70 25c8 14 20 14 27 0 7-14 19-14 27 0" />
+    <circle cx="97" cy="25" r="3" fill="#6D706C" /><circle cx="8" cy="25" r="2" fill="#6D706C" /><circle cx="186" cy="25" r="2" fill="#6D706C" />
+  </svg>
+  <Img x={909} y={362} w={150} h={149} src={seal} alt="Seal of the State of Delaware" class="deco" />
+
+  <Box x={153} y={542} w={273} h={410} style="background:#F0FAFF" />
+  <Text x={160} y={542} w={259} size={10} color="#000" align="center">(Click picture to watch video)</Text>
+  <Img x={157} y={560} w={263} h={149} src={thumb} alt="Governor Carney signing Senate Bills 35 and 92" href={video} ext />
+  <Text x={179} y={720} w={215} font="pf" size={15} color="#000" lh="19.6px" ls="0.45px" class="m-text">
+    On August, 7th 2019, Governor John Carney signed Senate Bill 35 and Senate Substitute 1 for Senate Bill 92 into effect. Both bills were passed to ensure that individuals with pre-existing conditions are protected and do not have limited access to health care.
+    <a href={news} target="_blank" rel="noopener" style="text-decoration:underline">Click here to learn more!</a>
+  </Text>
+</Base>

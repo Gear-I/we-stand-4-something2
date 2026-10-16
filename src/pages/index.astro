@@ -1,0 +1,43 @@
+---
+import Base from '../layouts/Base.astro';
+import Text from '../components/Text.astro';
+import Img from '../components/Img.astro';
+import Box from '../components/Box.astro';
+import Abs from '../components/Abs.astro';
+import StackButton from '../components/StackButton.astro';
+import { SOCIAL } from '../data/site';
+import { contentHeight, url, wix, COLORS, FONTS } from '../lib/layout';
+
+const W = COLORS.light;
+const bigLogo = wix('996292_c27297a55ebd4707ba1e7e31cc39572e~mv2.png/v1/fill/w_960,h_960,al_c,q_90,usm_0.66_1.00_0.01/logo.png');
+const emmanuel = wix('f45d39_0f746333cff946bda5b82c822bd27a7e~mv2.jpeg/v1/fill/w_328,h_308,al_c,q_80,usm_0.66_1.00_0.01/Emmanuel%20Jenkins.jpeg');
+---
+<Base title="Home | ws4s" height={contentHeight(1815)} bg="#000">
+  <Img x={142} y={520} w={480} h={480} src={bigLogo} alt="We Stand 4 Something logo: a raised hand holding the globe" radius="7px" />
+
+  <!-- Buttons column -->
+  <Text x={629} y={364} w={208} font="trend" size={21} color={W} lh="21px" class="m-big" style="text-transform:uppercase">Click to learn more!</Text>
+  <StackButton x={626} y={458} w={224} h={71} label="Friday Feast" href={url('friday-feast/')} bg="#006C6D" shadow="#003637" icon="chevrons" iconAt={[626, 465, 55]} labelAt={[685, 479]} />
+  <StackButton x={629} y={565} w={224} h={71} label="Social" href={url('services/')} bg="#6DCFB6" shadow="#37685B" icon="social" iconAt={[653, 573, 55]} labelAt={[760, 586]} />
+  <StackButton x={629} y={648} w={221} h={72} label="Coaching" href={url('services/')} bg="#01B1AF" shadow="#015958" icon="chat" iconAt={[649, 656, 55]} labelAt={[718, 670]} />
+  <StackButton x={634} y={815} w={224} h={71} label="Advocacy" href={url('services/')} bg="#006C6D" shadow="#003637" icon="megaphone" iconAt={[653, 823, 55]} labelAt={[723, 836]} />
+  <StackButton x={634} y={1001} w={221} h={71} label="Life Skills" href={url('services/')} bg="#123636" shadow="#091B1B" icon="network" iconAt={[649, 1009, 55]} labelAt={[724, 1022]} />
+  <StackButton x={627} y={1139} w={219} h={74} label="Resources" href={url('resources/')} bg="#6DCFB6" shadow="#37685B" icon="down" iconAt={[656, 1154, 43]} labelAt={[705, 1159]} size={24} lh="33.6px" />
+
+  <!-- "Leave Your Mark" column -->
+  <Box x={869} y={361} w={13} h={526} style="border-left:6.67px solid #CADDE6" />
+  <Text x={900} y={374} w={230} as="h2" font="os" size={25} color="#CADDE6" align="center" style="white-space:nowrap">Leave Your Mark</Text>
+  <Img x={914} y={427} w={164} h={154} src={emmanuel} alt="Emmanuel Jenkins" href={url('emmanuel/')} />
+  <Text x={872} y={610} w={248} size={18} color="#fff" align="center" lh="23.4px" class="m-text">
+    Emmanuel Jenkins is a dedicated advocate and the founder of We Stand 4 Something. With over 20 years of experience in public speaking and community leadership, he works tirelessly to support individuals with disabilities and their families.
+  </Text>
+  <Abs x={921} y={873} w={151} h={33} href={url('emmanuel/')} style={`background:#282626;color:${W};font:300 18px/33px ${FONTS.avenir};letter-spacing:.9px;text-align:center`}>Read More</Abs>
+
+  <Abs x={686} y={1549} w={100} h={30} style="display:flex;gap:5px">
+    {SOCIAL.map((s) => (
+      <a href={s.href} target="_blank" rel="noopener" aria-label={s.name}>
+        <img src={wix(`${s.icon}/v1/fill/w_60,h_60,al_c,q_85/${s.icon}`)} alt={s.name} width="30" height="30" />
+      </a>
+    ))}
+  </Abs>
+</Base>

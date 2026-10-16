@@ -1,0 +1,40 @@
+---
+/** Sign-up dialog (Services page). Open it with a button carrying data-open="<id>". */
+import { CONTACT } from '../data/site';
+
+interface Props {
+  id: string;
+  title: string;
+}
+
+const { id, title } = Astro.props;
+---
+<dialog class="popup" id={id} aria-labelledby={`${id}-title`}>
+  <button class="x" type="button" aria-label="Close" data-close>&times;</button>
+  <h2 id={`${id}-title`}>{title}</h2>
+  <p class="contact">
+    Tel: <a href={`tel:${CONTACT.phone}`}>302-669-9747</a> &nbsp;|&nbsp; <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+  </p>
+  <form class="wform" data-subject={title} action={`mailto:${CONTACT.email}`} method="post" enctype="text/plain">
+    <input type="text" name="name" placeholder="Name" aria-label="Name" required />
+    <input type="email" name="email" placeholder="Email" aria-label="Email" required />
+    <textarea name="message" placeholder="Type your message here..." aria-label="Message" rows="5"></textarea>
+    <button type="submit">Submit</button>
+  </form>
+</dialog>
+
+<script>
+  import { initMailtoForms } from '../scripts/mailto-forms';
+
+  document.querySelectorAll<HTMLElement>('[data-open]').forEach((trigger) => {
+    trigger.addEventListener('click', () => {
+      document.getElementById(trigger.dataset.open ?? '')?.closest('dialog')?.showModal();
+    });
+  });
+  document.querySelectorAll<HTMLDialogElement>('dialog.popup').forEach((dialog) => {
+    dialog.querySelector('[data-close]')?.addEventListener('click', () => dialog.close());
+    // close when clicking the dimmed backdrop
+    dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
+  });
+  initMailtoForms();
+</script>

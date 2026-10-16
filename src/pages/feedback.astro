@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro';
+import Text from '../components/Text.astro';
+import Box from '../components/Box.astro';
+import Band from '../components/Band.astro';
+import ContactForm, { type Field } from '../components/ContactForm.astro';
+import { contentHeight } from '../lib/layout';
+
+const fields: Field[] = [
+  { x: 351, y: 855, w: 280, h: 66, name: 'first', placeholder: 'First Name', type: 'text', required: true },
+  { x: 629, y: 855, w: 280, h: 66, name: 'last', placeholder: 'Last Name', type: 'text' },
+  { x: 351, y: 919, w: 280, h: 66, name: 'email', placeholder: 'Email', type: 'email', required: true },
+  { x: 629, y: 919, w: 280, h: 66, name: 'phone', placeholder: 'Phone', type: 'tel' },
+  { x: 351, y: 983, w: 558, h: 126, name: 'message', placeholder: 'Type your message here...', type: 'textarea', required: true },
+];
+---
+<Base title="Feedback! | ws4s" height={contentHeight(1576)} bg="#00E689" current="feedback/">
+  <Band slot="bands" y={509} h={3} color="#61AA93" />
+
+  <Text x={400} y={361} w={441} as="h1" font="os" size={50} weight={700} color="#01B1AF" align="center" class="m-big">Your Feedback Matters!</Text>
+  <Text x={387} y={533} w={484} font="lb" size={20} weight={700} color="#515E65" align="center" class="m-text">
+    We Stand 4 Something appreciates and encourages any feedback that you can provide to us, including ways to make our website more accessible and easier to navigate. We strive to offer the best services and resources, so let us know below how we are doing and how we can improve!
+  </Text>
+
+  <Box x={317} y={782} w={630} h={497} style="background:#fff" />
+  <ContactForm
+    x={317} y={782} w={630} h={497}
+    subject="Website feedback"
+    fields={fields}
+    fieldStyle="border:2px solid #373B4D;background:#fff"
+    button={{ x: 723, y: 1109, w: 186, h: 52, label: 'Submit', style: 'background:#373B4D;color:#fff;font:400 14px Georgia,serif' }}
+  >
+    <h2 style="position:absolute;left:36px;top:0;margin:0;font:400 30px Georgia,serif;color:#000">Contact Us</h2>
+  </ContactForm>
+</Base>
