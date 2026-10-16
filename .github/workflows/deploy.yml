@@ -23,11 +23,12 @@ jobs:
         uses: withastro/action@v6
         with:
           node-version: 22
-        # For a custom domain, set repository variables SITE_URL (e.g. https://www.westand4something.org)
+        # By default the site is built for https://<owner>.github.io/<repo>/, so it works in any
+        # fork. For a custom domain, set repository variables SITE_URL (e.g. https://www.westand4something.org)
         # and BASE_PATH (/) under Settings → Secrets and variables → Actions → Variables.
         env:
-          SITE_URL: ${{ vars.SITE_URL }}
-          BASE_PATH: ${{ vars.BASE_PATH }}
+          SITE_URL: ${{ vars.SITE_URL || format('https://{0}.github.io', github.repository_owner) }}
+          BASE_PATH: ${{ vars.BASE_PATH || format('/{0}', github.event.repository.name) }}
 
   deploy:
     needs: build
