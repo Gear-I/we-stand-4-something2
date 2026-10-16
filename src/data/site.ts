@@ -43,7 +43,8 @@ export const CONTACT = {
   phone: '+13026699747',
   email: 'info@westand4something.org',
   volunteerEmail: 'volunteer@westand4something.org',
-  copyright: '© 2025 We Stand 4 Something',
+  /** Year updates automatically each time the site is rebuilt (every push to main). */
+  copyright: `© ${new Date().getFullYear()} We Stand 4 Something`,
 } as const;
 
 /**

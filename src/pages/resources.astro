@@ -1,36 +1,59 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageIntro from '../components/PageIntro.astro';
-import { RESOURCES } from '../data/resources';
+import { RESOURCE_GROUPS, displayHost } from '../data/resources';
 import { url, wix } from '../lib/site';
 ---
-<Base title="Resources" current="resources/" description="Delaware agencies, programs and guides for people with disabilities and their families.">
+<Base title="Resources" current="resources/" description="Delaware agencies, programs and guides for people with disabilities and their families, grouped by topic.">
   <PageIntro title="Resources for Delawareans">
     <p>
-      We will continually update the resources on this page to help people with access and functional needs get the
-      services they are entitled to.
+      Organizations and guides that can help people with disabilities and their families in Delaware.
+      We keep adding to this list.
     </p>
   </PageIntro>
 
   <div class="section">
-    <div class="container">
-      <ul class="resource-list">
-        {RESOURCES.map((r) => (
-          <li class="panel resource">
-            <div class="logo"><img src={wix(r.logo)} alt="" width="200" height="140" loading="lazy" /></div>
-            <h2>{r.name}</h2>
-            <a class="btn btn-primary" href={r.url}>
-              {r.pdf ? 'Open the guide' : 'Visit the website'}
-              <span class="visually-hidden"> for {r.name}</span>{r.pdf && ' (PDF)'}
-            </a>
-          </li>
-        ))}
-      </ul>
+    <div class="container resources-layout">
+      <nav class="toc" aria-labelledby="toc-title">
+        <h2 id="toc-title">Topics on this page</h2>
+        <ul>
+          {RESOURCE_GROUPS.map((g) => (
+            <li><a href={`#${g.id}`}>{g.title}</a></li>
+          ))}
+        </ul>
+      </nav>
 
-      <div class="panel prose" style="margin-top:2.5rem">
-        <h2>Know a resource we should add?</h2>
-        <p>If there is a resource you feel is important and it is not listed here, please let us know.</p>
-        <a class="btn btn-outline" href={url('feedback/')}>Suggest a resource</a>
+      <div class="resource-groups">
+        {RESOURCE_GROUPS.map((g) => (
+          <section class="resource-group" aria-labelledby={g.id}>
+            <h2 id={g.id}>{g.title}</h2>
+            <ul class="resource-list">
+              {g.resources.map((r) => (
+                <li class="resource">
+                  <div class="resource-logo">
+                    <img src={wix(r.logo)} alt="" width="160" height="112" loading="lazy" />
+                  </div>
+                  <div class="resource-text">
+                    <h3>{r.name}</h3>
+                    <p>{r.description}</p>
+                    <p class="resource-link">
+                      <a href={r.url}>
+                        {r.pdf ? 'Open the guide' : 'Visit the website'}<span class="visually-hidden">: {r.name}</span>
+                      </a>
+                      <span class="resource-host">{r.pdf ? 'PDF document' : displayHost(r.url)}</span>
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
+
+        <div class="panel suggest">
+          <h2>Know a resource we should add?</h2>
+          <p>If there is a resource you feel is important and it is not listed here, please let us know.</p>
+          <a class="btn btn-outline" href={url('feedback/')}>Suggest a resource</a>
+        </div>
       </div>
     </div>
   </div>
