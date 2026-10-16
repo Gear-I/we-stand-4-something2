@@ -1,0 +1,45 @@
+---
+/** Shared layout for the board member biography pages. */
+import Base from '../layouts/Base.astro';
+import { TEAM } from '../data/team';
+import { url } from '../lib/site';
+
+interface Props {
+  /** Page path of this member, e.g. "emmanuel/". */
+  href: string;
+  photoAlt: string;
+}
+
+const { href, photoAlt } = Astro.props;
+const i = TEAM.findIndex((m) => m.href === href);
+const member = TEAM[i];
+const prev = TEAM[i - 1];
+const next = TEAM[i + 1];
+---
+<Base title={member.name} description={`Biography of ${member.name}, ${member.role} at We Stand 4 Something.`}>
+  <article class="section">
+    <div class="container">
+      <p><a href={url('about/')}>About us</a> <span aria-hidden="true">/</span> Board members</p>
+      <h1>{member.name}</h1>
+      <p class="hero-lead">{member.role}</p>
+      <div class="bio">
+        <img src={member.photo} alt={photoAlt} width="288" height="288" />
+        <div class="prose">
+          <slot />
+        </div>
+      </div>
+      <nav class="pager" aria-label="Board member biographies">
+        {prev ? (
+          <a href={url(prev.href)} rel="prev"><span class="label">Previous</span>{prev.name}</a>
+        ) : (
+          <a href={url('about/')}><span class="label">Back to</span>About us</a>
+        )}
+        {next ? (
+          <a class="next" href={url(next.href)} rel="next"><span class="label">Next</span>{next.name}</a>
+        ) : (
+          <a class="next" href={url('services/')}><span class="label">Next</span>Our services</a>
+        )}
+      </nav>
+    </div>
+  </article>
+</Base>

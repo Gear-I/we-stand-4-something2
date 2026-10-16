@@ -1,48 +1,62 @@
 ---
 import Base from '../layouts/Base.astro';
-import Text from '../components/Text.astro';
+import PageIntro from '../components/PageIntro.astro';
 import Icon from '../components/Icon.astro';
-import Popup from '../components/Popup.astro';
-import { contentHeight, pos } from '../lib/layout';
-import type { IconName } from '../data/icons';
-
-const D = '#292F33';
-const blocks: { y: number; iconY: number; icon: IconName; title: string; titleY: number; desc?: { y: number; w: number; text: string } }[] = [
-  {
-    y: 448, iconY: 461, icon: 'chat', title: 'Advocacy', titleY: 443,
-    desc: { y: 519, w: 801, text: '“Teach a man to fish and he eats for a lifetime...”  We are firm believers in self advocacy.  Learning to speak up for yourself is the first step to true independence.  We also work with our state legislators and community partners to increase service offerings throughout Delaware.' },
-  },
-  {
-    y: 699, iconY: 711, icon: 'network', title: 'Resource Connection', titleY: 686,
-    desc: { y: 814, w: 828, text: 'Are you looking for access to financial, educational, life skills, and/or social development resources?  At We Stand 4 Something, we open the door to possibilities that allow those we serve to be more independent and live the life he/she deserves.  If you or someone you know is looking for access to services, we are here to assist you.' },
-  },
-  { y: 1047, iconY: 1060, icon: 'social', title: 'Social interaction groups', titleY: 1045 },
-];
+import SignupDialog from '../components/SignupDialog.astro';
 ---
-<Base title="Services | ws4s" height={contentHeight(1849)} bg="#CADDE6" current="services/">
-  <Text x={400} y={358} w={465} font="din" size={20} weight={700} color="#00995B" align="center" italic>All services are free of charge for our clients...</Text>
-  <Text x={149} y={391} w={300} as="h1" font="os" size={25} color={D}>OUR SERVICES</Text>
+<Base title="Our services" current="services/" description="Advocacy, resource connection and social interaction groups from We Stand 4 Something. All services are free for our clients.">
+  <PageIntro title="Our services">
+    <p class="callout">All our services are free of charge for our clients.</p>
+  </PageIntro>
 
-  {blocks.map((b) => (
-    <>
-      <div class="a deco" style={pos(159, b.y, 82, 82)}>
-        <Icon name="square" style="width:82px;height:82px;fill:#00995B" />
-        <Icon name={b.icon} style={`position:absolute;left:13px;top:${b.iconY - b.y}px;width:55px;height:55px;fill:#004D2E`} />
-      </div>
-      <Text x={250} y={b.titleY} w={400} as="h2" font="amatic" size={40} color={D}>{b.title}</Text>
-      {b.desc && <Text x={253} y={b.desc.y} w={b.desc.w} font="din" size={26} weight={300} color={D} class="m-text">{b.desc.text}</Text>}
-    </>
-  ))}
+  <div class="section">
+    <div class="container">
+      <section class="service" aria-labelledby="advocacy">
+        <span class="help-icon"><Icon name="megaphone" /></span>
+        <div class="prose">
+          <h2 id="advocacy">Advocacy</h2>
+          <p>
+            “Teach a man to fish and he eats for a lifetime...” We are firm believers in self advocacy. Learning to speak up for
+            yourself is the first step to true independence.
+          </p>
+          <p>We also work with our state legislators and community partners to increase service offerings throughout Delaware.</p>
+        </div>
+      </section>
 
-  <Text x={292} y={1181} w={781} font="din" size={26} weight={300} color={D} class="m-text">
-    Brain Injury Survivor Group:  Our brain injury social interaction group meets virtually on the 1st and 3rd Tuesday of each month.  If you are interested in joining, please <button type="button" class="inline-link" data-open="brain-injury">click here</button> to register
-  </Text>
-  <Text x={292} y={1294} w={781} font="din" size={26} weight={300} color={D} class="m-text">
-    Parent/Caregiver Social Interaction Group:  If you would like to join our parent/caregiver group, please <button type="button" class="inline-link" data-open="caregiver">click here</button> to register
-  </Text>
+      <section class="service" aria-labelledby="resource-connection">
+        <span class="help-icon"><Icon name="network" /></span>
+        <div class="prose">
+          <h2 id="resource-connection">Resource connection</h2>
+          <p>
+            Are you looking for access to financial, educational, life skills, and/or social development resources? At We Stand
+            4 Something, we open the door to possibilities that allow those we serve to be more independent and live the life
+            they deserve.
+          </p>
+          <p>If you or someone you know is looking for access to services, we are here to assist you.</p>
+        </div>
+      </section>
 
-  <Fragment slot="after">
-    <Popup id="brain-injury" title="Join our Brain Injury Group" />
-    <Popup id="caregiver" title="Parent/Caregiver Group" />
-  </Fragment>
+      <section class="service" aria-labelledby="social-groups">
+        <span class="help-icon"><Icon name="social" /></span>
+        <div class="prose">
+          <h2 id="social-groups">Social interaction groups</h2>
+
+          <div class="group">
+            <h3>Brain Injury Survivor Group</h3>
+            <p>Our brain injury social interaction group meets online on the 1st and 3rd Tuesday of each month.</p>
+            <button class="btn btn-primary" type="button" data-open-dialog="brain-injury">Join the Brain Injury Survivor Group</button>
+          </div>
+
+          <div class="group">
+            <h3>Parent and Caregiver Group</h3>
+            <p>A social interaction group for parents and caregivers.</p>
+            <button class="btn btn-primary" type="button" data-open-dialog="caregiver">Join the Parent and Caregiver Group</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <SignupDialog id="brain-injury" title="Join the Brain Injury Survivor Group" intro="Tell us how to reach you and we will send you the meeting details." />
+  <SignupDialog id="caregiver" title="Join the Parent and Caregiver Group" intro="Tell us how to reach you and we will send you the group details." />
 </Base>

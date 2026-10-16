@@ -1,0 +1,12 @@
+---
+/** Page heading (the page's single h1) with an optional short introduction. */
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+<div class="container page-intro">
+  <h1>{title}</h1>
+  <slot />
+</div>

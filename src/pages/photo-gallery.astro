@@ -1,13 +1,76 @@
 ---
 import Base from '../layouts/Base.astro';
-import Text from '../components/Text.astro';
-import Box from '../components/Box.astro';
-import PhotoSlider from '../components/PhotoSlider.astro';
+import PageIntro from '../components/PageIntro.astro';
 import { GALLERY } from '../data/gallery';
-import { contentHeight } from '../lib/layout';
+import { wix } from '../lib/site';
+
+const photos = GALLERY.map((id, i) => ({
+  thumb: wix(`${id}~mv2.jpg/v1/fill/w_400,h_400,al_c,q_80,usm_0.66_1.00_0.01/${id}.jpg`),
+  full: wix(`${id}~mv2.jpg/v1/fit/w_1600,h_1200,al_c,q_85/${id}.jpg`),
+  alt: `2018 Friday Feast, photo ${i + 1} of ${GALLERY.length}`,
+}));
 ---
-<Base title="Photo Gallery | ws4s" height={contentHeight(1090)} bg="#CADDE6" current="photo-gallery/">
-  <Text x={400} y={365} w={465} as="h1" font="trend" size={27} color="#292929" align="center" lh="27px" style="text-transform:uppercase">2018 fRIDAY fEAST</Text>
-  <PhotoSlider y={414} label="2018 Friday Feast photo" photos={GALLERY} />
-  <Box x={154} y={809} w={937} h={1} style="border-top:0.67px solid #00E689" />
+<Base title="Photo gallery" current="photo-gallery/" description="Photos from the 2018 Friday Feast.">
+  <PageIntro title="Photo gallery">
+    <p>Photos from the 2018 Friday Feast. Select a photo to see it larger, then use the Previous and Next buttons or your arrow keys.</p>
+  </PageIntro>
+
+  <section class="section" aria-labelledby="ff2018">
+    <div class="container">
+      <h2 id="ff2018">2018 Friday Feast</h2>
+      <ul class="gallery">
+        {photos.map((p, i) => (
+          <li>
+            <a href={p.full} data-index={i}>
+              <img src={p.thumb} alt={p.alt} width="200" height="200" loading="lazy" />
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <dialog class="viewer" aria-label="Photo viewer">
+    <figure>
+      <img src="" alt="" />
+      <div class="viewer-bar">
+        <button class="btn" type="button" data-step="-1">Previous</button>
+        <figcaption aria-live="polite"></figcaption>
+        <button class="btn" type="button" data-step="1">Next</button>
+        <button class="btn" type="button" data-close>Close</button>
+      </div>
+    </figure>
+  </dialog>
 </Base>
+
+<script>
+  // Progressive enhancement: without JavaScript, each thumbnail simply links to the full-size photo.
+  const links = [...document.querySelectorAll<HTMLAnchorElement>('.gallery a')];
+  const dialog = document.querySelector<HTMLDialogElement>('dialog.viewer')!;
+  const img = dialog.querySelector('img')!;
+  const caption = dialog.querySelector('figcaption')!;
+  let index = 0;
+
+  const show = (i: number) => {
+    index = (i + links.length) % links.length;
+    const thumb = links[index].querySelector('img')!;
+    img.src = links[index].href;
+    img.alt = thumb.alt;
+    caption.textContent = `Photo ${index + 1} of ${links.length}`;
+  };
+
+  links.forEach((a, i) => a.addEventListener('click', (e) => {
+    e.preventDefault();
+    show(i);
+    dialog.showModal();
+  }));
+  dialog.querySelectorAll<HTMLButtonElement>('[data-step]').forEach((b) =>
+    b.addEventListener('click', () => show(index + Number(b.dataset.step))));
+  dialog.querySelector('[data-close]')!.addEventListener('click', () => dialog.close());
+  dialog.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') show(index - 1);
+    if (e.key === 'ArrowRight') show(index + 1);
+  });
+  // Return focus to the thumbnail that was last shown
+  dialog.addEventListener('close', () => links[index].focus());
+</script>

@@ -4,6 +4,14 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      version:
+        description: 'Which version of the website to publish'
+        type: choice
+        default: main
+        options:
+          - main            # current accessible design
+          - classic-design  # original design copied from the Wix site
 
 permissions:
   contents: read
@@ -18,7 +26,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      # Version to build: the one picked in "Run workflow", otherwise the SITE_VERSION repository
+      # variable (set it to classic-design to keep the old design live), otherwise this commit.
       - uses: actions/checkout@v7
+        with:
+          ref: ${{ inputs.version || vars.SITE_VERSION || github.sha }}
       - name: Build site with Astro
         uses: withastro/action@v6
         with:

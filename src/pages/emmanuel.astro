@@ -1,17 +1,30 @@
 ---
-import Base from '../layouts/Base.astro';
-import Text from '../components/Text.astro';
-import Img from '../components/Img.astro';
-import Box from '../components/Box.astro';
-import { contentHeight, url, wix } from '../lib/layout';
+import BioPage from '../components/BioPage.astro';
 ---
-<Base title="About Emmanuel Jenkins" height={contentHeight(1764)} bg="#CADDE6">
-  <Text x={172} y={397} w={600} as="h1" font="os" size={25} weight={700} color="#004D2E">Emmanuel Jenkins- Founder &amp; Director</Text>
-  <Box x={171} y={438} w={920} h={1} style="border-top:0.67px solid rgba(154,174,184,.8)" />
-  <Img x={188} y={489} w={327} h={317} src={wix('f45d39_0f746333cff946bda5b82c822bd27a7e~mv2.jpeg/v1/fill/w_654,h_634,al_c,lg_1,q_85/Emmanuel%20Jenkins.jpeg')} alt="Emmanuel Jenkins" radius="7px" />
-  <Text x={568} y={490} w={530} font="helv" size={18} lh="23.4px" class="m-text">
-    Emmanuel Jenkins, the dynamic driving force behind the transformative nonprofit We Stand 4 Something, is a beacon of support for individuals with disabilities and their families, spreading positivity and hope. In Delaware, he stands out as the Community Relations Officer for the Delaware Developmental Disabilities Council and serves influentially as the vice-chair of the Delaware Developmental Disabilities Services Advisory Committee. An alumnus of the Partners in Policymaking program since 2014, Emmanuel's unwavering dedication to advocacy is evident in his ongoing roles on the Advisory Committee for the Self-Advocacy Resource and Technical Assistance Center and as chair of the National Association of Councils on Developmental Disabilities (NACDD) Leaders with Lived Experiences (LLE) Committee. He also serves on the NACDD board. In 2024, Emmanuel was appointed by President Joe Biden to serve on the President’s Committee for People with Intellectual Disabilities (PCPID), further amplifying his national impact. As the founder of E Jenkins Solutions, LLC, Emmanuel leverages his expertise to provide a wide range of services, including leadership training and development, business development, quality assurance, plain language document creation, and policy and procedure development. Through his LLC, he works with organizations to ensure accessibility, clarity, and excellence in their operations. In academia, Emmanuel is a distinguished LEND Faculty Member at the University of Delaware. A devoted family man, married since 2009 and father to a 19-year-old, he exemplifies the transformative power of motivation. With over two decades as a motivational speaker, Emmanuel envisions a future in Congress where his tireless advocacy can reach new heights, embodying resilience, determination, and the belief in standing for something greater.
-  </Text>
-  <Text x={178} y={1346} w={100} href={url('about/')} class="pager">Back</Text>
-  <Text x={981} y={1346} w={100} href={url('marissa/')} class="pager">Next</Text>
-</Base>
+<BioPage href="emmanuel/" photoAlt="Emmanuel Jenkins smiling">
+  <p>
+    Emmanuel Jenkins, the dynamic driving force behind the transformative nonprofit We Stand 4 Something, is a beacon of
+    support for individuals with disabilities and their families, spreading positivity and hope. In Delaware, he stands out
+    as the Community Relations Officer for the Delaware Developmental Disabilities Council and serves influentially as the
+    vice-chair of the Delaware Developmental Disabilities Services Advisory Committee.
+  </p>
+  <p>
+    An alumnus of the Partners in Policymaking program since 2014, Emmanuel's unwavering dedication to advocacy is evident in
+    his ongoing roles on the Advisory Committee for the Self-Advocacy Resource and Technical Assistance Center and as chair of
+    the National Association of Councils on Developmental Disabilities (NACDD) Leaders with Lived Experiences (LLE) Committee.
+    He also serves on the NACDD board. In 2024, Emmanuel was appointed by President Joe Biden to serve on the President’s
+    Committee for People with Intellectual Disabilities (PCPID), further amplifying his national impact.
+  </p>
+  <p>
+    As the founder of E Jenkins Solutions, LLC, Emmanuel leverages his expertise to provide a wide range of services, including
+    leadership training and development, business development, quality assurance, plain language document creation, and policy
+    and procedure development. Through his LLC, he works with organizations to ensure accessibility, clarity, and excellence in
+    their operations.
+  </p>
+  <p>
+    In academia, Emmanuel is a distinguished LEND Faculty Member at the University of Delaware. A devoted family man, married
+    since 2009 and father to a 19-year-old, he exemplifies the transformative power of motivation. With over two decades as a
+    motivational speaker, Emmanuel envisions a future in Congress where his tireless advocacy can reach new heights, embodying
+    resilience, determination, and the belief in standing for something greater.
+  </p>
+</BioPage>

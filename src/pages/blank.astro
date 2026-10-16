@@ -1,33 +1,38 @@
 ---
-// "Support Us!" — the URL /blank/ is kept from the original Wix site.
+// "Support us". The URL /blank/ is kept from the original Wix site.
 import Base from '../layouts/Base.astro';
-import Text from '../components/Text.astro';
-import Img from '../components/Img.astro';
-import Abs from '../components/Abs.astro';
-import { contentHeight, wix } from '../lib/layout';
+import PageIntro from '../components/PageIntro.astro';
+import { CONTACT, DONATE } from '../data/site';
 
-const G = '#515E65';
-const volunteer = 'mailto:volunteer@westand4something.org?subject=' + encodeURIComponent('Hi!  I have amazing skills and I would like to volunteer!');
+const volunteer = `mailto:${CONTACT.volunteerEmail}?subject=${encodeURIComponent('I would like to volunteer')}`;
 ---
-<Base title="Support Us! | ws4s" height={contentHeight(1232)} bg="#CADDE6" current="blank/">
-  <Img x={554} y={382} w={196} h={89} src={wix('996292_06854b9ca8db4d7f869b681f8c7a22e7~mv2.jpg/v1/fill/w_392,h_178,al_c,lg_1,q_80/support.jpg')} alt="Support Us" />
+<Base title="Support us" current="blank/" description="Donate to or volunteer with We Stand 4 Something.">
+  <PageIntro title="Support us">
+    <p>We rely on the support of our community. Every gift of money or time helps.</p>
+  </PageIntro>
 
-  <Text x={166} y={512} w={160} as="h2" font="script" size={38} color="#004D2E">Donate!</Text>
-  <Text x={333} y={513} w={665} color={G} class="m-text">
-    We rely heavily on the support of the community!  Show your love today - send us a donation - no matter what size!  Rest assured your funds will go directly to support our programs and bring someone with a disability one step closer to realizing the dream of living a full, active and rewarding life!
-  </Text>
-  <Abs x={544} y={600} w={216} h={39} style="display:flex;align-items:center;gap:10px">
-    <img src={wix('996292_f4100cd3c3ee4b45940f760277026f63~mv2.jpg/v1/fill/w_228,h_78,al_c,q_80/paypal.jpg')} alt="PayPal" width="114" height="39" />
-    <img src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" alt="Donate" width="92" height="26" style="margin-top:6px" />
-  </Abs>
+  <section class="section" aria-labelledby="donate">
+    <div class="container prose">
+      <h2 id="donate">Donate</h2>
+      <p>
+        Show your love today and send us a donation, no matter what size! Your funds go directly to support our programs and
+        bring someone with a disability one step closer to realizing the dream of living a full, active and rewarding life.
+      </p>
+      <div class="btn-row">
+        <a class="btn btn-accent" href={DONATE.url}>{DONATE.label}</a>
+        <a class="btn btn-outline" href={`mailto:${CONTACT.email}?subject=${encodeURIComponent('Donation question')}`}>Email us about other ways to give</a>
+      </div>
+    </div>
+  </section>
 
-  <Text x={333} y={682} w={665} color={G} class="m-text">
-    When shopping on Amazon, use Amazon Smile! Each time you shop with Amazon smile, Amazon donates 0.5% of the price of your purchase to your favorite charity, We Stand 4 Something! All that you have to do is log onto <a href="https://smile.amazon.com/" target="_blank" rel="noopener" style="text-decoration:underline">smile.amazon.com</a>. On your first visit you will be able to select your charitable organization of choice. Simply put We Stand 4 Something and then shop away!
-  </Text>
-  <Img x={585} y={775} w={133} h={73} src={wix('0bae78_e2b8f9a41bfc4f9da784553a86369c5e~mv2.png/v1/fill/w_266,h_146,al_c,q_85,usm_0.66_1.00_0.01/amazon.png')} alt="Amazon Smile" href="https://smile.amazon.com/" ext fit="contain" />
-
-  <Text x={161} y={915} w={160} as="h2" font="script" size={38} color="#004D2E">Volunteer!</Text>
-  <Text x={321} y={910} w={665} color={G} class="m-text">
-    Everyone has something to offer!  We currently have a need for office help (filing, phones, etc), media mavens (website, facebook, twitter), and probably some other things that we don't even know we need!  <a href={volunteer} style="text-decoration:underline">Contact us</a> today and find out how you fit in.
-  </Text>
+  <section class="section section--mist" aria-labelledby="volunteer">
+    <div class="container prose">
+      <h2 id="volunteer">Volunteer</h2>
+      <p>
+        Everyone has something to offer! We currently need help in the office (filing, phones and more), media help (website,
+        Facebook, X/Twitter), and probably other things we don't even know we need yet.
+      </p>
+      <a class="btn btn-primary" href={volunteer}>Email us about volunteering</a>
+    </div>
+  </section>
 </Base>

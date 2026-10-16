@@ -1,30 +1,55 @@
 ---
 import Base from '../layouts/Base.astro';
-import Box from '../components/Box.astro';
-import Calendar from '../components/Calendar.astro';
+import PageIntro from '../components/PageIntro.astro';
+import EventItem from '../components/EventItem.astro';
 import ContactForm, { type Field } from '../components/ContactForm.astro';
-import { contentHeight, stackShadow, FONTS } from '../lib/layout';
+import { EVENTS } from '../data/events';
+import { CONTACT } from '../data/site';
+
+// Split at build time: the site rebuilds on every push to main.
+const today = new Date().toISOString().slice(0, 10);
+const upcoming = EVENTS.filter((e) => e.date >= today).sort((a, b) => a.date.localeCompare(b.date));
+const past = EVENTS.filter((e) => e.date < today).sort((a, b) => b.date.localeCompare(a.date));
 
 const fields: Field[] = [
-  { x: 291, y: 1158, w: 680, h: 60, name: 'name', placeholder: 'Name', type: 'text', required: true },
-  { x: 291, y: 1230, w: 680, h: 60, name: 'email', placeholder: 'Email', type: 'email', required: true },
-  { x: 291, y: 1302, w: 680, h: 129, name: 'message', placeholder: 'Tell us which event you are registering for', type: 'textarea', required: true },
+  { name: 'name', label: 'Your name', type: 'text', required: true, autocomplete: 'name', pairWithNext: true },
+  { name: 'email', label: 'Email address', type: 'email', required: true, autocomplete: 'email' },
+  { name: 'event', label: 'Which event are you registering for?', type: 'text', required: true },
+  { name: 'needs', label: 'Accessibility needs or questions', type: 'textarea', hint: 'For example: wheelchair seating, an interpreter, or dietary needs.' },
 ];
 ---
-<Base title="Events | ws4s" height={contentHeight(1780)} bg="#CADDE6" current="events/">
-  <Calendar x={238} y={380} w={797} />
+<Base title="Events" current="events/" description="Upcoming events from We Stand 4 Something, and how to register.">
+  <PageIntro title="Events" />
 
-  <Box x={277} y={1081} w={710} h={423} style="background:#fff" />
-  <ContactForm
-    x={277} y={1081} w={710} h={423}
-    subject="Event registration"
-    fields={fields}
-    fieldStyle="border:0.67px solid #67D6D6;box-shadow:0 2px 0 0 #67D6D6;background:#fff"
-    button={{
-      x: 291, y: 1428, w: 340, h: 53, label: 'Submit',
-      style: `background:#6DCFB6;color:#F0FAFF;border-radius:5px;box-shadow:${stackShadow('#37685B')};font:400 25px ${FONTS.os}`,
-    }}
-  >
-    <h2 style={`position:absolute;left:14px;top:27px;margin:0;font:italic 700 25px ${FONTS.bree};color:#00E689`}>Register for events</h2>
-  </ContactForm>
+  <section class="section" aria-labelledby="upcoming">
+    <div class="container prose">
+      <h2 id="upcoming">Upcoming events</h2>
+      {upcoming.length ? (
+        <ul class="event-list">{upcoming.map((e) => <EventItem event={e} />)}</ul>
+      ) : (
+        <p>
+          There are no upcoming events listed right now. Check back soon, or email
+          <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a> to hear about the next one.
+        </p>
+      )}
+    </div>
+  </section>
+
+  <section class="section section--mist" aria-labelledby="register">
+    <div class="container">
+      <div class="panel" style="max-width:44rem">
+        <h2 id="register">Register for an event</h2>
+        <ContactForm id="register" subject="Event registration" fields={fields} submitLabel="Send registration" />
+      </div>
+    </div>
+  </section>
+
+  {past.length > 0 && (
+    <section class="section" aria-labelledby="past">
+      <div class="container prose">
+        <h2 id="past">Past events</h2>
+        <ul class="event-list">{past.map((e) => <EventItem event={e} />)}</ul>
+      </div>
+    </section>
+  )}
 </Base>

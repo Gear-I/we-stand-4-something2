@@ -1,43 +1,74 @@
 ---
 import Base from '../layouts/Base.astro';
-import Text from '../components/Text.astro';
-import Img from '../components/Img.astro';
-import Box from '../components/Box.astro';
-import Abs from '../components/Abs.astro';
-import StackButton from '../components/StackButton.astro';
-import { SOCIAL } from '../data/site';
-import { contentHeight, url, wix, COLORS, FONTS } from '../lib/layout';
+import Icon from '../components/Icon.astro';
+import type { IconName } from '../data/icons';
+import { LOGO } from '../data/site';
+import { TEAM } from '../data/team';
+import { url, wix } from '../lib/site';
 
-const W = COLORS.light;
-const bigLogo = wix('996292_c27297a55ebd4707ba1e7e31cc39572e~mv2.png/v1/fill/w_960,h_960,al_c,q_90,usm_0.66_1.00_0.01/logo.png');
-const emmanuel = wix('f45d39_0f746333cff946bda5b82c822bd27a7e~mv2.jpeg/v1/fill/w_328,h_308,al_c,q_80,usm_0.66_1.00_0.01/Emmanuel%20Jenkins.jpeg');
+// Short descriptions are drawn from the Services, About and Friday Feast pages.
+const help: { title: string; href: string; icon: IconName; text: string }[] = [
+  { title: 'Advocacy', href: 'services/', icon: 'megaphone', text: 'Learning to speak up for yourself is the first step to true independence.' },
+  { title: 'Coaching', href: 'services/', icon: 'chat', text: 'Self-advocacy skills and public speaking coaching, so people can find their own voice.' },
+  { title: 'Social groups', href: 'services/', icon: 'social', text: 'Groups for brain injury survivors, and for parents and caregivers.' },
+  { title: 'Life skills', href: 'services/', icon: 'network', text: 'Help with housing, applications, employment and the skills to live independently.' },
+  { title: 'Resources', href: 'resources/', icon: 'down', text: 'Delaware agencies and programs that support people with disabilities.' },
+  { title: 'Friday Feast', href: 'friday-feast/', icon: 'chevrons', text: 'A free holiday celebration where everyone has a seat at the table.' },
+];
+const founder = TEAM[0];
 ---
-<Base title="Home | ws4s" height={contentHeight(1815)} bg="#000">
-  <Img x={142} y={520} w={480} h={480} src={bigLogo} alt="We Stand 4 Something logo: a raised hand holding the globe" radius="7px" />
+<Base>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="container hero-grid">
+      <div>
+        <h1 id="hero-title">Enhancing independence for people with disabilities</h1>
+        <p class="hero-lead">
+          We Stand 4 Something provides the bridge between traditional services and the full, engaged lives people want.
+          Our services are free for our clients.
+        </p>
+        <div class="btn-row">
+          <a class="btn btn-primary" href={url('services/')}>Explore our services</a>
+          <a class="btn btn-outline" href={url('blank/')}>Donate or volunteer</a>
+        </div>
+      </div>
+      <div class="hero-art">
+        <svg class="stroke" viewBox="0 0 400 300" preserveAspectRatio="none" aria-hidden="true">
+          <path d="M18 92C60 40 160 22 248 30c70 6 128 26 140 70 14 52-10 118-70 152-70 40-190 44-256 4C8 226-6 160 18 92z" />
+        </svg>
+        <img src={wix(`${LOGO}/v1/fill/w_840,h_840,al_c,q_90,usm_0.66_1.00_0.01/logo.png`)} alt="We Stand 4 Something logo: a raised hand holding the globe" width="420" height="420" />
+      </div>
+    </div>
+  </section>
 
-  <!-- Buttons column -->
-  <Text x={629} y={364} w={208} font="trend" size={21} color={W} lh="21px" class="m-big" style="text-transform:uppercase">Click to learn more!</Text>
-  <StackButton x={626} y={458} w={224} h={71} label="Friday Feast" href={url('friday-feast/')} bg="#006C6D" shadow="#003637" icon="chevrons" iconAt={[626, 465, 55]} labelAt={[685, 479]} />
-  <StackButton x={629} y={565} w={224} h={71} label="Social" href={url('services/')} bg="#6DCFB6" shadow="#37685B" icon="social" iconAt={[653, 573, 55]} labelAt={[760, 586]} />
-  <StackButton x={629} y={648} w={221} h={72} label="Coaching" href={url('services/')} bg="#01B1AF" shadow="#015958" icon="chat" iconAt={[649, 656, 55]} labelAt={[718, 670]} />
-  <StackButton x={634} y={815} w={224} h={71} label="Advocacy" href={url('services/')} bg="#006C6D" shadow="#003637" icon="megaphone" iconAt={[653, 823, 55]} labelAt={[723, 836]} />
-  <StackButton x={634} y={1001} w={221} h={71} label="Life Skills" href={url('services/')} bg="#123636" shadow="#091B1B" icon="network" iconAt={[649, 1009, 55]} labelAt={[724, 1022]} />
-  <StackButton x={627} y={1139} w={219} h={74} label="Resources" href={url('resources/')} bg="#6DCFB6" shadow="#37685B" icon="down" iconAt={[656, 1154, 43]} labelAt={[705, 1159]} size={24} lh="33.6px" />
+  <section class="section section--mist" aria-labelledby="help-title">
+    <div class="container">
+      <h2 id="help-title">How we help</h2>
+      <ul class="help-list">
+        {help.map((h) => (
+          <li class="help-item">
+            <span class="help-icon"><Icon name={h.icon} /></span>
+            <div>
+              <h3><a href={url(h.href)}>{h.title}</a></h3>
+              <p>{h.text}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
 
-  <!-- "Leave Your Mark" column -->
-  <Box x={869} y={361} w={13} h={526} style="border-left:6.67px solid #CADDE6" />
-  <Text x={900} y={374} w={230} as="h2" font="os" size={25} color="#CADDE6" align="center" style="white-space:nowrap">Leave Your Mark</Text>
-  <Img x={914} y={427} w={164} h={154} src={emmanuel} alt="Emmanuel Jenkins" href={url('emmanuel/')} />
-  <Text x={872} y={610} w={248} size={18} color="#fff" align="center" lh="23.4px" class="m-text">
-    Emmanuel Jenkins is a dedicated advocate and the founder of We Stand 4 Something. With over 20 years of experience in public speaking and community leadership, he works tirelessly to support individuals with disabilities and their families.
-  </Text>
-  <Abs x={921} y={873} w={151} h={33} href={url('emmanuel/')} style={`background:#282626;color:${W};font:300 18px/33px ${FONTS.avenir};letter-spacing:.9px;text-align:center`}>Read More</Abs>
-
-  <Abs x={686} y={1549} w={100} h={30} style="display:flex;gap:5px">
-    {SOCIAL.map((s) => (
-      <a href={s.href} target="_blank" rel="noopener" aria-label={s.name}>
-        <img src={wix(`${s.icon}/v1/fill/w_60,h_60,al_c,q_85/${s.icon}`)} alt={s.name} width="30" height="30" />
-      </a>
-    ))}
-  </Abs>
+  <section class="section" aria-labelledby="founder-title">
+    <div class="container feature">
+      <img src={founder.photo} alt="Emmanuel Jenkins smiling" width="327" height="317" loading="lazy" />
+      <div class="prose">
+        <h2 id="founder-title">Meet our founder</h2>
+        <p>
+          Emmanuel Jenkins is a dedicated advocate and the founder of We Stand 4 Something. With over 20 years of
+          experience in public speaking and community leadership, he works tirelessly to support individuals with
+          disabilities and their families.
+        </p>
+        <a class="btn btn-primary" href={url(founder.href)}>Read Emmanuel’s story</a>
+      </div>
+    </div>
+  </section>
 </Base>

@@ -1,28 +1,29 @@
 ---
 import Base from '../layouts/Base.astro';
-import Text from '../components/Text.astro';
-import Abs from '../components/Abs.astro';
-import Icon from '../components/Icon.astro';
-import { contentHeight, FONTS } from '../lib/layout';
-
-const H = '#292F33';
-const G = '#515E65';
-const donate = 'https://www.zeffy.com/en-US/donation-form/3036b57a-b266-4240-97ab-7b99843ce6d8';
+import PageIntro from '../components/PageIntro.astro';
+import { DONATE } from '../data/site';
+import { url } from '../lib/site';
 ---
-<Base title="Friday Feast | ws4s" height={contentHeight(2504)} bg="#F0FAFF">
-  <Text x={200} y={392} w={864} as="h1" font="os" size={50} weight={700} color={H} align="center" lh="55px" class="m-big">🦃 The Friday Feast is Back! 🦃</Text>
-  <Text x={200} y={479} w={864} as="h2" font="os" size={50} weight={700} color={H} align="center" lh="55px" class="m-big">Friday, November 21, 2025</Text>
-  <Text x={267} y={605} w={757} size={30} color={G} align="justify" lh="39px" class="m-text">
-    We Stand 4 Something is proud to bring back The Friday Feast — a night of food, fun, and community!
-  </Text>
-  <Text x={267} y={683} w={757} size={30} color={G} align="justify" lh="39px" class="m-text">
-    This free celebration is more than just a meal — it’s a space where everyone belongs. People with and without disabilities come together to share joy, connection, and holiday cheer. For many, this is the only holiday celebration where they feel truly welcomed. It’s a night where strangers become friends, families come together, and everyone has a seat at the table.
-  </Text>
-  <Text x={225} y={1015} w={841} font="os" size={40} weight={700} color={H} align="center" lh="44px" class="m-big">
-    Click the button below if you would like to donate. Thank you for your donation!
-  </Text>
-  <Abs x={455} y={1165} w={354} h={76} href={donate} ext
-    style={`display:flex;align-items:center;justify-content:center;gap:10px;background:#00995B;border-radius:50px;color:#F0FAFF;font:700 30px ${FONTS.avenir};letter-spacing:7.5px`}>
-    Donate<Icon name="arrow" style="width:37px;height:37px;fill:#F0FAFF" />
-  </Abs>
+<Base title="Friday Feast" description="The Friday Feast: a free holiday celebration of food, fun and community from We Stand 4 Something.">
+  <PageIntro title="The Friday Feast is back!">
+    <p><strong><time datetime="2025-11-21">Friday, November 21, 2025</time></strong></p>
+  </PageIntro>
+
+  <section class="section" aria-label="About the Friday Feast">
+    <div class="container prose">
+      <p>We Stand 4 Something is proud to bring back The Friday Feast: a night of food, fun, and community!</p>
+      <p>
+        This free celebration is more than just a meal. It’s a space where everyone belongs. People with and without
+        disabilities come together to share joy, connection, and holiday cheer. For many, this is the only holiday celebration
+        where they feel truly welcomed. It’s a night where strangers become friends, families come together, and everyone has
+        a seat at the table.
+      </p>
+      <h2>Help make the Feast happen</h2>
+      <p>If you would like to support the Friday Feast, you can donate online. Thank you for your donation!</p>
+      <div class="btn-row">
+        <a class="btn btn-accent" href={DONATE.url}>Donate to the Friday Feast</a>
+        <a class="btn btn-outline" href={url('photo-gallery/')}>See photos from 2018</a>
+      </div>
+    </div>
+  </section>
 </Base>

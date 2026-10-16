@@ -1,6 +1,5 @@
 ---
-import Icon from './Icon.astro';
-import type { Post } from '../data/site';
+import { formatDate, type Post } from '../data/site';
 
 interface Props {
   post: Post;
@@ -8,7 +7,6 @@ interface Props {
 
 const { post } = Astro.props;
 ---
-<div class="post-byline">
-  <Icon name="avatar" style="width:32px;height:32px;flex:none" />
-  <div class="post-meta">{post.author}<br />{post.date} &middot; {post.readTime}</div>
-</div>
+<p class="post-meta">
+  Posted <time datetime={post.date}>{formatDate(post.date)}</time> by {post.author}. {post.readTime}.
+</p>

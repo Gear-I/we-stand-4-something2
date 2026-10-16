@@ -1,19 +1,46 @@
 ---
-import { CONTACT } from '../data/site';
-import { pos } from '../lib/layout';
-
-const at = (x: number, y: number, w?: number) => pos(x, y, w, undefined, 0);
+import { CONTACT, SOCIAL } from '../data/site';
+import { url, wix } from '../lib/site';
 ---
-<footer class="band site-footer">
-  <div class="canvas">
-    <p class="a ft-logo" style={at(149, 39)}>WS<span>4</span>S</p>
-    <p class="a ft-txt" style={at(149, 152, 260)}>{CONTACT.tagline}</p>
-    <div class="a ft-txt" style={at(910, 20, 210)}>
-      {CONTACT.name}<br />
-      {CONTACT.address[0]}<br />{CONTACT.address[1]}<br />
-      {CONTACT.phoneDisplay}<br />
-      <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <p class="footer-motto">{CONTACT.motto}</p>
+        <p>{CONTACT.name} is a Delaware nonprofit run by and for people with disabilities and their families.</p>
+      </div>
+      <div>
+        <h2>Contact us</h2>
+        <address>
+          {CONTACT.name}<br />
+          {CONTACT.address[0]}<br />{CONTACT.address[1]}<br />
+          Phone: <a href={`tel:${CONTACT.phone}`}>{CONTACT.phoneDisplay}</a> ({CONTACT.phoneVanity})<br />
+          Email: <a href={`mailto:${CONTACT.email}`}>{CONTACT.email}</a>
+        </address>
+      </div>
+      <div>
+        <h2>Quick links</h2>
+        <ul>
+          <li><a href={url('services/')}>Our services</a></li>
+          <li><a href={url('events/')}>Events</a></li>
+          <li><a href={url('blank/')}>Donate or volunteer</a></li>
+          <li><a href={url('feedback/')}>Give us feedback</a></li>
+          <li><a href={url('accessibility/')}>Accessibility statement</a></li>
+        </ul>
+      </div>
+      <div>
+        <h2>Follow us</h2>
+        <ul class="social-list">
+          {SOCIAL.map((s) => (
+            <li>
+              <a href={s.href}>
+                <img src={wix(`${s.icon}/v1/fill/w_60,h_60,al_c,q_85/${s.icon}`)} alt="" width="28" height="28" />{s.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
-    <p class="a ft-txt" style={at(562, 152, 230)}>{CONTACT.copyright}</p>
+    <p class="footer-bottom">{CONTACT.copyright}</p>
   </div>
 </footer>

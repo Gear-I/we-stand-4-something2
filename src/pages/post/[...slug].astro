@@ -1,34 +1,46 @@
 ---
-// Individual blog posts at their original Wix URLs, e.g. /post/2016/06/23/emmanuel-is-live-on-wboc-tv/
+// Blog posts at their original Wix URLs, e.g. /post/2016/06/23/emmanuel-is-live-on-wboc-tv/
 import Base from '../../layouts/Base.astro';
-import Abs from '../../components/Abs.astro';
-import Text from '../../components/Text.astro';
 import PostMeta from '../../components/PostMeta.astro';
 import { POSTS, type Post } from '../../data/site';
-import { pos, url, wix, HEADER_H, FONTS } from '../../lib/layout';
+import { url, wix } from '../../lib/site';
 
 export function getStaticPaths() {
   return POSTS.map((post) => ({ params: { slug: post.slug }, props: { post } }));
 }
 
 const { post } = Astro.props as { post: Post };
-const total = post.youtube ? 1300 : 1450;
 ---
-<Base title={`${post.title} | ws4s`} description={post.body?.slice(0, 150)} height={total - HEADER_H} bg="#000">
-  <div slot="bands" class="full deco blog-panel" style="top:0;bottom:0"></div>
+<Base title={post.title} description={post.excerpt ?? post.title}>
+  <article class="section">
+    <div class="container prose">
+      <p><a href={url('blog-1/')}>Back to the blog</a></p>
+      <h1>{post.title}</h1>
+      <PostMeta post={post} />
 
-  <Abs x={222} y={400} w={820}><PostMeta post={post} /></Abs>
-  <Text x={222} y={460} w={820} as="h1" font="os" size={32} class="m-big">{post.title}</Text>
+      {post.youtube && (
+        <>
+          <div class="video">
+            <iframe
+              src={`https://www.youtube-nocookie.com/embed/${post.youtube}`}
+              title={`Video: ${post.title}`}
+              loading="lazy"
+              allow="encrypted-media; picture-in-picture"
+              allowfullscreen
+            ></iframe>
+          </div>
+          <p style="margin-top:1rem">
+            <a href={`https://www.youtube.com/watch?v=${post.youtube}`}>Watch this video on YouTube</a>,
+            where you can turn on captions if they are available.
+          </p>
+        </>
+      )}
 
-  {post.youtube ? (
-    <Abs x={222} y={560} w={820} h={461} class="m-full video">
-      <iframe src={`https://www.youtube-nocookie.com/embed/${post.youtube}`} title={post.title} loading="lazy" allowfullscreen></iframe>
-    </Abs>
-  ) : (
-    <img class="a" src={wix(`${post.image}/v1/fill/w_790,h_848,al_c,lg_1,q_80/post.jpg`)} alt="Emmanuel Jenkins" width="395" height="424" style={pos(434, 560, 395, 424) + 'object-fit:cover'} />
-  )}
+      {post.image && (
+        <img src={wix(`${post.image}/v1/fill/w_790,h_848,al_c,lg_1,q_80/post.jpg`)} alt={post.imageAlt ?? ''} width="395" height="424" style="border-radius:0.75rem;margin-bottom:1.5rem" />
+      )}
 
-  {post.body && <Text x={222} y={1010} w={820} size={18} lh="1.6" class="m-text">{post.body}</Text>}
-
-  <Abs x={222} y={total - 120} href={url('blog-1/')} style={`font:400 14px ${FONTS.enr};color:#00995B;text-decoration:underline`}>&larr; All Posts</Abs>
+      {post.body && <p>{post.body}</p>}
+    </div>
+  </article>
 </Base>

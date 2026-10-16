@@ -1,47 +1,67 @@
 ---
 /**
- * A positioned form whose fields sit at their original page coordinates.
- * Submitting opens the visitor's email app (see scripts/mailto-forms.ts).
+ * A form with visible labels. GitHub Pages can't receive form posts, so sending opens the
+ * visitor's email app with the message filled in (see scripts/mailto-forms.ts).
  */
-import { pos } from '../lib/layout';
+import { CONTACT } from '../data/site';
 
 export interface Field {
-  x: number;
-  y: number;
-  w: number;
-  h: number;
   name: string;
-  placeholder: string;
+  label: string;
   type: 'text' | 'email' | 'tel' | 'textarea';
   required?: boolean;
+  autocomplete?: string;
+  hint?: string;
+  /** Put this field side by side with the next one on wide screens. */
+  pairWithNext?: boolean;
 }
 
 interface Props {
-  x: number;
-  y: number;
-  w: number;
-  h: number;
+  /** Unique prefix for field ids. */
+  id: string;
   subject: string;
   fields: Field[];
-  /** Submit button position/size in page coordinates. */
-  button: { x: number; y: number; w: number; h: number; label: string; style: string };
-  fieldStyle: string;
+  submitLabel: string;
 }
 
-const { x, y, w, h, subject, fields, button, fieldStyle } = Astro.props;
-const inner = (f: { x: number; y: number; w: number; h: number }) =>
-  `position:absolute;left:${f.x - x}px;top:${f.y - y}px;width:${f.w}px;height:${f.h}px;`;
+const { id, subject, fields, submitLabel } = Astro.props;
+
+// Group fields into rows (pairs where requested)
+const rows: Field[][] = [];
+for (let i = 0; i < fields.length; i++) {
+  if (fields[i].pairWithNext && fields[i + 1]) { rows.push([fields[i], fields[i + 1]]); i++; }
+  else rows.push([fields[i]]);
+}
+const hasRequired = fields.some((f) => f.required);
 ---
-<form class="a wform" data-subject={subject} style={pos(x, y, w, h)} action="mailto:info@westand4something.org" method="post" enctype="text/plain">
-  <slot />
-  {fields.map((f) =>
-    f.type === 'textarea' ? (
-      <textarea name={f.name} placeholder={f.placeholder} aria-label={f.placeholder} style={inner(f) + fieldStyle} required={f.required} />
-    ) : (
-      <input type={f.type} name={f.name} placeholder={f.placeholder} aria-label={f.placeholder} style={inner(f) + fieldStyle} required={f.required} />
-    )
-  )}
-  <button type="submit" style={inner(button) + button.style}>{button.label}</button>
+<form class="form" data-subject={subject} action={`mailto:${CONTACT.email}`} method="post" enctype="text/plain">
+  {hasRequired && <p class="form-note">Fields marked <span class="req" aria-hidden="true">*</span> (required) must be filled in.</p>}
+  {rows.map((row) => (
+    <div class={row.length > 1 ? 'form-row' : undefined}>
+      {row.map((f) => {
+        const fid = `${id}-${f.name}`;
+        const hintId = f.hint ? `${fid}-hint` : undefined;
+        return (
+          <div class="field">
+            <label for={fid}>
+              {f.label}{f.required && <span class="req" aria-hidden="true"> *</span>}{f.required && <span class="visually-hidden"> (required)</span>}
+            </label>
+            {f.hint && <span class="hint" id={hintId}>{f.hint}</span>}
+            {f.type === 'textarea' ? (
+              <textarea id={fid} name={f.name} required={f.required} aria-describedby={hintId} rows="6"></textarea>
+            ) : (
+              <input id={fid} type={f.type} name={f.name} required={f.required} autocomplete={f.autocomplete} aria-describedby={hintId} />
+            )}
+          </div>
+        );
+      })}
+    </div>
+  ))}
+  <p class="form-note">
+    Choosing “{submitLabel}” opens your email app with your message ready to send to {CONTACT.email}.
+    You can also call us at <a href={`tel:${CONTACT.phone}`}>{CONTACT.phoneDisplay}</a>.
+  </p>
+  <div><button class="btn btn-primary" type="submit">{submitLabel}</button></div>
 </form>
 
 <script>

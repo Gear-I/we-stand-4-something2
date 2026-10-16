@@ -1,0 +1,44 @@
+---
+/**
+ * Sign-up form in a modal dialog. Open it with a button carrying data-open-dialog="<id>".
+ * Uses the native <dialog> element, which traps focus, closes with Escape and
+ * returns focus to the button that opened it.
+ */
+import ContactForm, { type Field } from './ContactForm.astro';
+
+interface Props {
+  id: string;
+  title: string;
+  intro?: string;
+}
+
+const { id, title, intro } = Astro.props;
+const fields: Field[] = [
+  { name: 'name', label: 'Your name', type: 'text', required: true, autocomplete: 'name' },
+  { name: 'email', label: 'Email address', type: 'email', required: true, autocomplete: 'email' },
+  { name: 'phone', label: 'Phone number', type: 'tel', autocomplete: 'tel' },
+  { name: 'message', label: 'Anything you would like us to know', type: 'textarea' },
+];
+---
+<dialog class="signup" id={id} aria-labelledby={`${id}-title`}>
+  <div class="dialog-body">
+    <div class="dialog-head">
+      <h2 id={`${id}-title`}>{title}</h2>
+      <button class="dialog-close" type="button" data-close-dialog aria-label="Close">&times;</button>
+    </div>
+    {intro && <p>{intro}</p>}
+    <ContactForm id={id} subject={title} fields={fields} submitLabel="Send sign-up email" />
+  </div>
+</dialog>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('[data-open-dialog]').forEach((trigger) => {
+    trigger.addEventListener('click', () => {
+      (document.getElementById(trigger.dataset.openDialog ?? '') as HTMLDialogElement | null)?.showModal();
+    });
+  });
+  document.querySelectorAll<HTMLDialogElement>('dialog.signup').forEach((dialog) => {
+    dialog.querySelector('[data-close-dialog]')?.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', (e) => { if (e.target === dialog) dialog.close(); });
+  });
+</script>

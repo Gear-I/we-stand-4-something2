@@ -1,0 +1,51 @@
+---
+import Base from '../layouts/Base.astro';
+import PageIntro from '../components/PageIntro.astro';
+import { CONTACT } from '../data/site';
+import { url } from '../lib/site';
+---
+<Base title="Accessibility statement" current="accessibility/" description="How We Stand 4 Something makes this website accessible, and how to tell us about a problem.">
+  <PageIntro title="Accessibility statement">
+    <p>We are people with disabilities and their families. This website should work for everyone who visits it.</p>
+  </PageIntro>
+
+  <div class="section">
+    <div class="container prose">
+      <h2>Our goal</h2>
+      <p>
+        We aim for this website to meet the Web Content Accessibility Guidelines (WCAG) 2.2 at level AA. We test it with
+        automated checks, with a keyboard only, and at large text sizes.
+      </p>
+
+      <h2>What you can do on this site</h2>
+      <ul>
+        <li>Make the text larger, or switch to high-contrast yellow and white on black, using the <strong>Display</strong> button at the top of every page. Your choice is remembered on this device.</li>
+        <li>Zoom in up to 400% without text overlapping or needing to scroll sideways.</li>
+        <li>Use every menu, button and form with a keyboard. A visible outline shows where you are.</li>
+        <li>Skip straight to the main content with the first link on each page.</li>
+        <li>Use a screen reader: pages have clear headings, labelled forms and descriptions of images.</li>
+        <li>If your device is set to reduce motion or increase contrast, the site follows that setting.</li>
+      </ul>
+
+      <h2>Known limitations</h2>
+      <ul>
+        <li>Videos are hosted on YouTube and Livestream. We cannot control their captions.</li>
+        <li>Some guides on our <a href={url('resources/')}>Resources</a> page are PDF documents from other organizations and may not be fully accessible.</li>
+        <li>Photos in the gallery do not yet have individual descriptions.</li>
+        <li>Forms open your email app to send. If that does not work for you, please call or email us directly.</li>
+      </ul>
+
+      <h2>Tell us about a problem</h2>
+      <p>
+        If something on this site is hard to use, or you need information in another format, please contact us. We will do our
+        best to help.
+      </p>
+      <ul>
+        <li>Phone: <a href={`tel:${CONTACT.phone}`}>{CONTACT.phoneDisplay}</a></li>
+        <li>Email: <a href={`mailto:${CONTACT.email}?subject=${encodeURIComponent('Website accessibility')}`}>{CONTACT.email}</a></li>
+        <li>Or use our <a href={url('feedback/')}>feedback form</a>.</li>
+      </ul>
+      <p class="post-meta">This statement was last reviewed in October 2026.</p>
+    </div>
+  </div>
+</Base>

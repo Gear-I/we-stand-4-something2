@@ -1,0 +1,29 @@
+---
+import type { SiteEvent } from '../data/events';
+import { url } from '../lib/site';
+
+interface Props {
+  event: SiteEvent;
+}
+
+const { event } = Astro.props;
+const [y, m, d] = event.date.split('-').map(Number);
+const date = new Date(Date.UTC(y, m - 1, d));
+const fmt = (o: Intl.DateTimeFormatOptions) => date.toLocaleDateString('en-US', { ...o, timeZone: 'UTC' });
+---
+<li class="event">
+  <div class="event-date" aria-hidden="true">
+    <span class="month">{fmt({ month: 'short' })}</span>
+    <span class="day">{d}</span>
+    <span class="year">{y}</span>
+  </div>
+  <div>
+    <h3>{event.page ? <a href={url(event.page)}>{event.title}</a> : event.title}</h3>
+    <p>
+      <time datetime={event.date}>{fmt({ weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}</time>
+      {event.time && <>, {event.time}</>}
+      {event.location && <><br />{event.location}</>}
+    </p>
+    <p>{event.description}</p>
+  </div>
+</li>

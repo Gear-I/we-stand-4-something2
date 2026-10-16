@@ -1,0 +1,70 @@
+---
+/**
+ * Lets visitors choose a larger text size and a high-contrast colour scheme.
+ * Choices are saved in the browser (localStorage) and applied before the page paints (see Base.astro).
+ */
+import Icon from './Icon.astro';
+---
+<div class="display-settings">
+  <button class="btn btn-outline" type="button" aria-expanded="false" aria-controls="display-panel" id="display-button" aria-label="Display settings">
+    <Icon name="textsize" /><span class="btn-label">Display</span>
+  </button>
+  <div class="display-panel" id="display-panel" role="group" aria-labelledby="display-heading" hidden>
+    <h2 id="display-heading">Display settings</h2>
+    <fieldset>
+      <legend>Text size</legend>
+      <label class="option"><input type="radio" name="text-size" value="" /> Standard</label>
+      <label class="option"><input type="radio" name="text-size" value="large" /> Large</label>
+      <label class="option"><input type="radio" name="text-size" value="x-large" /> Extra large</label>
+    </fieldset>
+    <fieldset>
+      <legend>Colours</legend>
+      <label class="option"><input type="radio" name="contrast" value="" /> Standard</label>
+      <label class="option"><input type="radio" name="contrast" value="high" /> High contrast (yellow and white on black)</label>
+    </fieldset>
+    <button class="btn btn-primary" type="button" id="display-done">Done</button>
+  </div>
+</div>
+
+<script>
+  type Settings = { text?: string; contrast?: string };
+  const KEY = 'ws4s-display';
+  const root = document.documentElement;
+  const button = document.getElementById('display-button') as HTMLButtonElement;
+  const panel = document.getElementById('display-panel') as HTMLDivElement;
+
+  const load = (): Settings => {
+    try { return JSON.parse(localStorage.getItem(KEY) ?? '{}') as Settings; } catch { return {}; }
+  };
+  const save = (s: Settings) => {
+    try { localStorage.setItem(KEY, JSON.stringify(s)); } catch { /* not saved; still applies to this page */ }
+  };
+  const apply = (s: Settings) => {
+    if (s.text) root.dataset.text = s.text; else delete root.dataset.text;
+    if (s.contrast) root.dataset.contrast = s.contrast; else delete root.dataset.contrast;
+  };
+
+  const settings = load();
+  panel.querySelectorAll<HTMLInputElement>('input[name="text-size"]').forEach((i) => { i.checked = i.value === (settings.text ?? ''); });
+  panel.querySelectorAll<HTMLInputElement>('input[name="contrast"]').forEach((i) => { i.checked = i.value === (settings.contrast ?? ''); });
+
+  panel.addEventListener('change', (e) => {
+    const input = e.target as HTMLInputElement;
+    if (input.name === 'text-size') settings.text = input.value || undefined;
+    if (input.name === 'contrast') settings.contrast = input.value || undefined;
+    apply(settings);
+    save(settings);
+  });
+
+  const setOpen = (open: boolean) => {
+    button.setAttribute('aria-expanded', String(open));
+    panel.hidden = !open;
+    if (open) panel.querySelector<HTMLInputElement>('input:checked')?.focus();
+  };
+  button.addEventListener('click', () => setOpen(button.getAttribute('aria-expanded') !== 'true'));
+  document.getElementById('display-done')!.addEventListener('click', () => { setOpen(false); button.focus(); });
+  panel.addEventListener('keydown', (e) => { if (e.key === 'Escape') { setOpen(false); button.focus(); } });
+  document.addEventListener('click', (e) => {
+    if (!panel.hidden && !panel.contains(e.target as Node) && !button.contains(e.target as Node)) setOpen(false);
+  });
+</script>

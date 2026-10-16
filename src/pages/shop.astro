@@ -1,8 +1,16 @@
 ---
 import Base from '../layouts/Base.astro';
-import Text from '../components/Text.astro';
-import { contentHeight } from '../lib/layout';
+import PageIntro from '../components/PageIntro.astro';
+import { url } from '../lib/site';
 ---
-<Base title="Shop | ws4s" height={contentHeight(1090)} bg="#000" current="shop/">
-  <Text x={152} y={444} w={960} as="h1" size={24} color="#CADDE6" align="center">We don’t have any products to<br />show here right now.</Text>
+<Base title="Shop" current="shop/">
+  <PageIntro title="Shop">
+    <p>We don’t have any products to show here right now.</p>
+  </PageIntro>
+  <div class="section">
+    <div class="container prose">
+      <p>You can still support our work by donating or volunteering.</p>
+      <a class="btn btn-primary" href={url('blank/')}>Ways to support us</a>
+    </div>
+  </div>
 </Base>

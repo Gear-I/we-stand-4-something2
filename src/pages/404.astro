@@ -1,11 +1,18 @@
 ---
 import Base from '../layouts/Base.astro';
-import Text from '../components/Text.astro';
-import { url } from '../lib/layout';
+import PageIntro from '../components/PageIntro.astro';
+import { url } from '../lib/site';
 ---
-<Base title="Page not found | ws4s" height={400} bg="#F0FAFF">
-  <Text x={200} y={420} w={864} as="h1" font="os" size={40} weight={700} align="center" class="m-big">Page not found</Text>
-  <Text x={200} y={500} w={864} as="p" size={18} color="#515E65" align="center">
-    Sorry, we couldn’t find that page. <a href={url()} style="text-decoration:underline;color:#00995B">Go to the home page</a>.
-  </Text>
+<Base title="Page not found">
+  <PageIntro title="We can’t find that page">
+    <p>The page may have moved, or the address may have a typo.</p>
+  </PageIntro>
+  <div class="section">
+    <div class="container prose">
+      <div class="btn-row">
+        <a class="btn btn-primary" href={url()}>Go to the home page</a>
+        <a class="btn btn-outline" href={url('services/')}>See our services</a>
+      </div>
+    </div>
+  </div>
 </Base>
