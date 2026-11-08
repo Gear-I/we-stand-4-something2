@@ -6,7 +6,7 @@ import { url, wix } from '../lib/site';
 
 interface Props {
   /** Path of the current page (e.g. "about/"), used to mark the menu. */
-  current: string;
+  current?: string;
 }
 
 const { current } = Astro.props;
