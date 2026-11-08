@@ -1,5 +1,5 @@
 /** Board members, in the order the bio pages link to each other. */
-import { wix } from '../lib/site';
+import { url, wix } from '../lib/site';
 
 export interface Member {
   name: string;
@@ -30,7 +30,8 @@ export const TEAM: Member[] = [
     name: 'Dielle De Noon',
     role: 'Board member and Website Manager',
     href: 'dielle/',
-    photo: wix('f45d39_2e77752fec1347b1b50ddb302f678ce0~mv2.jpeg/v1/fill/w_520,h_520,al_c,q_80,usm_0.66_1.00_0.01/dielle.jpeg'),
-    thumb: wix('f45d39_1f23f76352474dd3b8ddf23fa1303ab4~mv2.jpg/v1/crop/x_0,y_505,w_3024,h_3022/fill/w_480,h_480,al_c,q_80,usm_0.66_1.00_0.01/dielle.jpg'),
+    // Stored in this repository: public/images/dielle-de-noon.jpg (800 × 800)
+    photo: url('images/dielle-de-noon.jpg'),
+    thumb: url('images/dielle-de-noon.jpg'),
   },
 ];
