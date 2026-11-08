@@ -89,19 +89,6 @@ export const POSTS: Post[] = [
     youtube: '37wSDJ7Un_U',
     excerpt: 'Watch Emmanuel Jenkins on WBOC’s Delmarva Life.',
   },
-  {
-    slug: '2016/06/23/emmanuel-is-live-on-wboc-tv',
-    title: 'Emmanuel is Live on WBOC TV!',
-    author: 'intern679',
-    date: '2016-06-23',
-    readTime: '1 minute read',
-    image: '996292_9dae49e74efe4d098adb14ae92d754fa~mv2.jpg',
-    imageAlt: 'Emmanuel Jenkins',
-    excerpt:
-      'Congratulations to We Stand 4 Something Inc. Owner Emmanuel Jenkins! Watch him on WBOC Delmarva Life June 30th at 5:00pm.',
-    body:
-      "Congratulations to We Stand 4 Something Inc. Owner Emmanuel Jenkins! Watch him on WBOC Delmarva Life June 30th @ 5:00pm. He will be talking about his nonprofit and what it has to offer to our community, as well as the 3rd Annual Friday Feast for people with disabilities and their family's. DON'T FORGET TO TUNE IN!",
-  },
 ];
 
 /** Format an ISO date (YYYY-MM-DD) as e.g. "June 23, 2016" without time-zone drift. */
